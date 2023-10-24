@@ -8,13 +8,20 @@ import {
   getSingleProduct,
   updateProduct,
   getProductsBySubCategory,
+  searchProducts,
+  filterProducts,
 } from "../controllers/productController.js";
 import formidableMiddleware from "express-formidable";
 import { verifyAuthentication } from "../helpers/verifyAuthentication.js";
 
 const router = express.Router();
 
-router.post("/add-new",verifyAuthentication, formidableMiddleware(), addNewProduct);
+router.post(
+  "/add-new",
+  verifyAuthentication,
+  formidableMiddleware(),
+  addNewProduct
+);
 
 router.get("/get-all", getAllProducts);
 
@@ -22,9 +29,20 @@ router.get("/get-product/:productId", getSingleProduct);
 router.get("/photo/:productId", getProductPhoto);
 router.get("/get-by-category/:cid", getProductsByCategory);
 router.get("/get-by-sub-category/:subcat", getProductsBySubCategory);
+router.get("/search/:searchKey", searchProducts);
+router.get("/filter-products", filterProducts);
 
-router.put("/update-product/:productId",verifyAuthentication, updateProduct);
+router.put(
+  "/update-product/:productId",
+  formidableMiddleware(),
+  verifyAuthentication,
+  updateProduct
+);
 
-router.delete("/delete-product/:productId",verifyAuthentication, deleteProduct);
+router.delete(
+  "/delete-product/:productId",
+  verifyAuthentication,
+  deleteProduct
+);
 
 export default router;
