@@ -151,7 +151,16 @@ export const getProductPhoto = async (req, res) => {
 
 export const getProductsByCategory = async (req, res) => {
   try {
-    const products = await productModel.find({ category: req.params.cid });
+    const { currPage, pageLimit } = req.query;
+
+    const skip = (currPage - 1) * pageLimit || 0;
+    const limit = pageLimit || 6;
+
+    const products = await productModel
+      .find({ category: req.params.cid })
+      .skip(skip)
+      .limit(limit)
+      .select("-photo");
     if (!products.length) {
       return NotFound(res, "No product under this category");
     }
@@ -177,5 +186,55 @@ export const getProductsBySubCategory = async (req, res) => {
     return res.status(200).send(products);
   } catch (error) {
     return serverError(res, error, "Error in products by sub-category");
+  }
+};
+
+export const searchProducts = async (req, res) => {
+  try {
+    const { searchKey } = req.params;
+
+    const result = [];
+
+    const searchQry = { name: { $regex: searchKey, $options: "i" } };
+
+    const products = await productModel.find(searchQry).select("-photo");
+    if (products.length) {
+      return res.status(200).send(products);
+    }
+  } catch (error) {
+    return serverError(res, error, "Error while Searching Products!");
+  }
+};
+
+export const filterProducts = async (req, res) => {
+  try {
+    let { cid, sortBy, order, currPage, pageLimit, ram } = req.query;
+
+    sortBy = sortBy || "price";
+
+    order = order === "desc" ? -1 : 1;
+
+    const sortArg = {};
+    sortArg[sortBy] = order;
+
+    const {} = req.query;
+
+    const skip = (currPage - 1) * pageLimit || 0;
+    const limit = pageLimit || 6;
+
+    let filterArgs = {};
+    if (cid) filterArgs.category = cid;
+    if (ram) filterArgs.desc = { ram: { $eq: ram } };
+
+    const products = await productModel
+      .find(filterArgs)
+      .sort(sortArg)
+      .select("-photo")
+      .skip(skip)
+      .limit(limit);
+
+    return res.status(200).send(products);
+  } catch (error) {
+    return serverError(res, error, "Error while filtering products");
   }
 };
