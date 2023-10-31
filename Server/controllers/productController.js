@@ -2,10 +2,22 @@ import slugify from "slugify";
 import fs from "fs";
 import productModel from "../models/productModel.js";
 import { NotFound, serverError } from "../helpers/handleError.js";
+import mongoose from "mongoose";
 
 export const addNewProduct = async (req, res) => {
   try {
-    const { name, desc, quantity, price, category, subcategory } = req.fields;
+    const {
+      name,
+      desc,
+      quantity,
+      price,
+      category,
+      subcategory,
+      rating,
+      discount,
+      delivery,
+      brand,
+    } = req.fields;
     const { photo } = req.files;
 
     // validation for required fields
@@ -20,6 +32,14 @@ export const addNewProduct = async (req, res) => {
         return NotFound(res, "Price required!");
       case !category:
         return NotFound(res, "Category required!");
+      case !rating:
+        return NotFound(res, "Rating required!");
+      case !discount:
+        return NotFound(res, "Discount required!");
+      case !delivery:
+        return NotFound(res, "Delivery required in days!");
+      case !brand:
+        return NotFound(res, "Brand required!");
       case !photo || photo.size > 1000000:
         return NotFound(res, "Photo required && size should be less than 1mb!");
     }
@@ -73,7 +93,18 @@ export const getSingleProduct = async (req, res) => {
 
 export const updateProduct = async (req, res) => {
   try {
-    const { name, desc, quantity, price, category, subcategory } = req.fields;
+    const {
+      name,
+      desc,
+      quantity,
+      price,
+      category,
+      subcategory,
+      delivery,
+      rating,
+      discount,
+      brand,
+    } = req.fields;
     const { photo } = req.files;
 
     // validation for required fields
@@ -88,6 +119,14 @@ export const updateProduct = async (req, res) => {
         return NotFound(res, "Price required!");
       case !category:
         return NotFound(res, "Category required!");
+      case !delivery:
+        return NotFound(res, "Delivery required!");
+      case !discount:
+        return NotFound(res, "Discount required!");
+      case !rating:
+        return NotFound(res, "Rating required!");
+      case !brand:
+        return NotFound(res, "Brand required!");
       case photo && photo.size > 1000000:
         return NotFound(res, "Photo required && size should be less than 1mb!");
     }
@@ -101,6 +140,10 @@ export const updateProduct = async (req, res) => {
       },
       { new: true }
     );
+
+    if (!product) {
+      return NotFound(res, "No Product Found!");
+    }
 
     if (photo) {
       product.photo.data = fs.readFileSync(photo.path);
@@ -197,7 +240,7 @@ export const searchProducts = async (req, res) => {
 
     const searchQry = { name: { $regex: searchKey, $options: "i" } };
 
-    const products = await productModel.find(searchQry).select("-photo");
+    const products = await productModel.find(searchQry);
     if (products.length) {
       return res.status(200).send(products);
     }
@@ -208,7 +251,17 @@ export const searchProducts = async (req, res) => {
 
 export const filterProducts = async (req, res) => {
   try {
-    let { cid, sortBy, order, currPage, pageLimit, ram } = req.query;
+    let {
+      cid,
+      sortBy,
+      order,
+      currPage,
+      pageLimit,
+      price,
+      rating,
+      discount,
+      brand,
+    } = req.query;
 
     sortBy = sortBy || "price";
 
@@ -217,14 +270,28 @@ export const filterProducts = async (req, res) => {
     const sortArg = {};
     sortArg[sortBy] = order;
 
-    const {} = req.query;
-
     const skip = (currPage - 1) * pageLimit || 0;
     const limit = pageLimit || 6;
 
     let filterArgs = {};
     if (cid) filterArgs.category = cid;
-    if (ram) filterArgs.desc = { ram: { $eq: ram } };
+
+    if (price.length) {
+      price = price.split(",");
+      filterArgs.price = { $gte: price[0] || 0, $lte: price[1] || 100000 };
+    }
+
+    if (rating) filterArgs.rating = { $gte: rating || 1 };
+
+    if (discount && discount.length > 0) {
+      filterArgs.discount = {
+        $gte: Math.min(...discount.split(",").map(Number)),
+      };
+    }
+
+    if (brand && brand.length > 0) {
+      filterArgs.brand = { $in: brand.split(",") };
+    }
 
     const products = await productModel
       .find(filterArgs)
@@ -236,5 +303,34 @@ export const filterProducts = async (req, res) => {
     return res.status(200).send(products);
   } catch (error) {
     return serverError(res, error, "Error while filtering products");
+  }
+};
+
+export const getAllBrands = async (req, res) => {
+  try {
+    const { catId } = req.query;
+
+    const categoryId = new mongoose.Types.ObjectId(catId);
+
+    // Using aggregate to group products by brand and get distinct brands
+    const brandAggregation = await productModel.aggregate([
+      {
+        $match: {
+          category: categoryId,
+          brand: { $exists: true, $ne: null },
+        },
+      },
+      {
+        $group: {
+          _id: "$brand",
+        },
+      },
+    ]);
+
+    const allBrands = brandAggregation.map((item) => item._id);
+
+    return res.status(200).json(allBrands);
+  } catch (error) {
+    return serverError(res, error, "Error while fetching brands!");
   }
 };
