@@ -28,8 +28,24 @@ const ProductSchema = new mongoose.Schema(
       ref: "Category",
       required: true,
     },
+    brand: {
+      type: String,
+      required: true,
+    },
     subcategory: {
       type: String,
+    },
+    rating: {
+      type: Number,
+      required: true,
+    },
+    discount: {
+      type: Number,
+      required: true,
+    },
+    delivery: {
+      type: Number,
+      required: true,
     },
   },
   { timestamps: true }
