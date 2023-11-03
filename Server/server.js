@@ -1,5 +1,6 @@
 import express from "express";
 import dotenv from "dotenv";
+import cors from "cors";
 import { connectDB } from "./helpers/db.js";
 import categoryRoute from "./routes/categoryRoutes.js";
 import productRoute from "./routes/productRoutes.js";
@@ -11,6 +12,7 @@ dotenv.config();
 const app = express();
 
 // middlewares
+app.use(cors());
 app.use(express.json());
 app.use(cookieParser());
 
