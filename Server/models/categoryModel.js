@@ -14,6 +14,7 @@ const CategorySchema = new mongoose.Schema(
       data: Buffer,
       contentType: String,
     },
+    subcategories: Array,
   },
   { timestamps: true }
 );
