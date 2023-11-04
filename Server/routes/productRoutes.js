@@ -11,6 +11,7 @@ import {
   searchProducts,
   filterProducts,
   getAllBrands,
+  getMultipleProducts,
 } from "../controllers/productController.js";
 import formidableMiddleware from "express-formidable";
 import { verifyAuthentication } from "../helpers/verifyAuthentication.js";
@@ -27,6 +28,9 @@ router.post(
 router.get("/get-all", getAllProducts);
 
 router.get("/get-product/:productId", getSingleProduct);
+
+// query param: ids [array of id]
+router.get("/get-multiple", getMultipleProducts);
 router.get("/photo/:productId", getProductPhoto);
 router.get("/get-by-category/:cid", getProductsByCategory);
 router.get("/get-by-sub-category/:subcat", getProductsBySubCategory);
