@@ -334,3 +334,25 @@ export const getAllBrands = async (req, res) => {
     return serverError(res, error, "Error while fetching brands!");
   }
 };
+
+export const getMultipleProducts = async (req, res) => {
+  try {
+    const { ids } = req.query;
+
+    const productIds = ids.split(",");
+
+    const multipleProducts = await productModel
+      .find({
+        _id: { $in: productIds },
+      })
+      .select("-photo");
+
+    if (multipleProducts) {
+      return res.status(200).send(multipleProducts);
+    }
+
+    return NotFound(res, "No product found!");
+  } catch (error) {
+    return serverError(res, error, "Error while fetching multiple products!");
+  }
+};
