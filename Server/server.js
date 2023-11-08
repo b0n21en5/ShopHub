@@ -5,7 +5,6 @@ import { connectDB } from "./helpers/db.js";
 import categoryRoute from "./routes/categoryRoutes.js";
 import productRoute from "./routes/productRoutes.js";
 import authRoute from "./routes/authRoutes.js";
-import orderRoute from "./routes/orderRoute.js";
 import cookieParser from "cookie-parser";
 
 dotenv.config();
@@ -20,8 +19,7 @@ app.use(cookieParser());
 // routes
 app.use("/api/category", categoryRoute);
 app.use("/api/products", productRoute);
-app.use("/api/user", authRoute);
-app.use("/api/orders", orderRoute);
+app.use("/api/auth", authRoute);
 
 connectDB();
 
