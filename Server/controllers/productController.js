@@ -3,6 +3,17 @@ import fs from "fs";
 import productModel from "../models/productModel.js";
 import { NotFound, serverError } from "../helpers/handleError.js";
 import mongoose from "mongoose";
+import dotenv from "dotenv";
+import Razorpay from "razorpay";
+import orderModel from "../models/orderModel.js";
+
+dotenv.config();
+
+// Instance to connect with razorpay
+const razorpayInstance = new Razorpay({
+  key_id: process.env.RAZORPAY_KEY_ID,
+  key_secret: process.env.RAZORPAY_KEY_SECRET,
+});
 
 export const addNewProduct = async (req, res) => {
   try {
@@ -354,5 +365,58 @@ export const getMultipleProducts = async (req, res) => {
     return NotFound(res, "No product found!");
   } catch (error) {
     return serverError(res, error, "Error while fetching multiple products!");
+  }
+};
+
+export const makeOrderPayment = async (req, res) => {
+  try {
+    const { products } = req.body;
+
+    let total = 0;
+    if (products?.length) {
+      products.forEach(
+        (pr) => (total += parseInt(pr?.price * (100 - pr?.discount)))
+      );
+    }
+    const order = await razorpayInstance.orders.create({
+      amount: total,
+      currency: "INR",
+      receipt: "receipt#1",
+    });
+
+    res.status(200).send(order);
+  } catch (error) {
+    return serverError(res, error, "Error While making payment!");
+  }
+};
+
+export const handleSuccessfulPayment = async (req, res) => {
+  try {
+    const { paymentDetails, products } = req.body;
+
+    // Validate payment details (you may want to add more validation)
+    if (!paymentDetails || !paymentDetails.razorpayPaymentId) {
+      return NotFound(res, "Invalid payment details");
+    }
+
+    // Verify the payment status with Razorpay
+    const paymentStatus = await razorpayInstance.payments.fetch(
+      paymentDetails.razorpayPaymentId
+    );
+
+    if (paymentStatus.status === "captured") {
+      //saving order to database
+      const order = new orderModel({
+        productId: products,
+        buyer: req.user._id,
+        payment: paymentStatus,
+      }).save();
+
+      return res.status(200).send({ status: "Payment successful" });
+    } else {
+      return res.status(400).send({ status: "Payment not successful" });
+    }
+  } catch (error) {
+    return serverError(res, error, "Error while payment success API!");
   }
 };

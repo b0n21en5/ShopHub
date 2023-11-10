@@ -12,6 +12,8 @@ import {
   filterProducts,
   getAllBrands,
   getMultipleProducts,
+  makeOrderPayment,
+  handleSuccessfulPayment,
 } from "../controllers/productController.js";
 import formidableMiddleware from "express-formidable";
 import { verifyAuthentication } from "../helpers/verifyAuthentication.js";
@@ -41,6 +43,10 @@ router.get("/filter-products", filterProducts);
 
 // query param: catId (category Id)
 router.get("/get-all-brands", getAllBrands);
+
+// Razorpay payment route
+router.post("/payment", verifyAuthentication, makeOrderPayment);
+router.post("/payment/success", verifyAuthentication, handleSuccessfulPayment);
 
 router.put(
   "/update-product/:productId",
