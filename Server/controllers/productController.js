@@ -407,7 +407,7 @@ export const handleSuccessfulPayment = async (req, res) => {
     if (paymentStatus.status === "captured") {
       //saving order to database
       const order = new orderModel({
-        productId: products,
+        products: products,
         buyer: req.user._id,
         payment: paymentStatus,
       }).save();
