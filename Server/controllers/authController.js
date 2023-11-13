@@ -86,23 +86,7 @@ export const userLoginController = async (req, res) => {
 
 export const updateUserCredentials = async (req, res) => {
   try {
-    const { username, email, password, phone, address, answer } = req.body;
-
-    // validation for request body
-    switch (true) {
-      case !username:
-        return NotFound(res, "Username required!");
-      case !email:
-        return NotFound(res, "Email required!");
-      case !password:
-        return NotFound(res, "Password required!");
-      case !phone:
-        return NotFound(res, "Phone required!");
-      case !address:
-        return NotFound(res, "Address required!");
-      case !answer:
-        return NotFound(res, "Answer required!");
-    }
+    const { email, password, phone } = req.body;
 
     let user = await userModel.findOne({
       $or: [{ email: email }, { phone: phone }],
@@ -111,7 +95,8 @@ export const updateUserCredentials = async (req, res) => {
       return NotFound(res, "No User Found with Email/Phone");
     }
 
-    const hashedPassword = await hashPassword(password);
+    let hashedPassword;
+    if (password) hashedPassword = await hashPassword(password);
 
     const updatedUser = await userModel.findOneAndUpdate(
       { _id: user._id },

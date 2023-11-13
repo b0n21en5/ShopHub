@@ -14,6 +14,7 @@ import {
   getMultipleProducts,
   makeOrderPayment,
   handleSuccessfulPayment,
+  getSimilarProducts,
 } from "../controllers/productController.js";
 import formidableMiddleware from "express-formidable";
 import { verifyAuthentication } from "../helpers/verifyAuthentication.js";
@@ -37,6 +38,7 @@ router.get("/photo/:productId", getProductPhoto);
 router.get("/get-by-category/:cid", getProductsByCategory);
 router.get("/get-by-sub-category/:subcat", getProductsBySubCategory);
 router.get("/search/:searchKey", searchProducts);
+router.get("/similar-products/:catid/:pid", getSimilarProducts);
 
 // query param: cid,sortBy,order,currPage,pageLimit,price,rating,discount,brand
 router.get("/filter-products", filterProducts);

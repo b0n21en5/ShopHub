@@ -420,3 +420,25 @@ export const handleSuccessfulPayment = async (req, res) => {
     return serverError(res, error, "Error while payment success API!");
   }
 };
+
+export const getSimilarProducts = async (req, res) => {
+  try {
+    const { catid, pid } = req.params;
+    console.log(catid)
+
+    const similarProducts = await productModel
+      .find({
+        category: catid,
+        _id: { $ne: pid },
+      })
+      .select("-photo");
+
+    if (!similarProducts.length) {
+      return NotFound(res, "No Similar Products!");
+    }
+
+    return res.status(200).send(similarProducts);
+  } catch (error) {
+    return serverError(res, error, "Error Fetching Similar Products!");
+  }
+};
