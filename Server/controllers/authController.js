@@ -73,14 +73,54 @@ export const userLoginController = async (req, res) => {
     });
 
     return res
-      .cookie("jwt_token", token, {
+      .cookie("user_token", token, {
         httpOnly: true,
         expires: new Date(Date.now() + 7 * 24 * 60 * 60 * 1000),
       })
       .status(200)
-      .send({ message: "Login sucessfull", user, token });
+      .send(user);
   } catch (error) {
     return serverError(res, error, "Error while logging");
+  }
+};
+
+export const adminLoginController = async (req, res) => {
+  try {
+    const { email, phone, password } = req.body;
+
+    if (!email && !phone) return NotFound(res, "Invalid Email or Phone!");
+    if (!password) return NotFound(res, "Password required!");
+
+    let user = await userModel.findOne({
+      $or: [{ email: email }, { phone: phone }],
+    });
+    if (!user) {
+      return NotFound(res, "Email/Phone is not registered!");
+    }
+
+    const isMatch = await checkPassword(password, user.password);
+    if (!isMatch) {
+      return NotFound(res, "Invalid Password!");
+    }
+
+    if (user.role) {
+      const token = await jwt.sign({ _id: user._id }, process.env.JWT_KEY, {
+        expiresIn: "7d",
+      });
+
+      user.password = "******";
+      return res
+        .cookie("admin_token", token, {
+          httpOnly: true,
+          expires: new Date(Date.now() + 7 * 24 * 60 * 60 * 1000),
+        })
+        .status(200)
+        .send(user);
+    }
+
+    return NotFound(res, `${email} is not Admin!`);
+  } catch (error) {
+    return serverError(res, error, "Error in Admin Login!");
   }
 };
 
@@ -112,7 +152,7 @@ export const updateUserCredentials = async (req, res) => {
   }
 };
 
-export const getAllOrdersWithFilters = async (req, res) => {
+export const getSingleUserOrdersWithFilters = async (req, res) => {
   try {
     let { status, search, time } = req.query;
 
@@ -134,13 +174,13 @@ export const getAllOrdersWithFilters = async (req, res) => {
     }
 
     // filter orders by status
-    if (status) {
+    if (status && status.length) {
       status = status.split(",");
       args["status"] = { $in: status };
     }
 
     // filter orders by time
-    if (time.length) {
+    if (time && time.length) {
       time = time.split(",");
       time.sort((a, b) => b - a);
 
@@ -151,12 +191,37 @@ export const getAllOrdersWithFilters = async (req, res) => {
       }
     }
 
-    const allOrders = await orderModel
+    const orders = await orderModel
       .find(args)
       .populate("products", "-photo")
       .sort({ createdAt: -1 });
 
-    return res.status(200).send(allOrders);
+    return res.status(200).send(orders);
+  } catch (error) {
+    return serverError(res, error, "Error Fetching Single User Orders!");
+  }
+};
+
+export const getAllOrders = async (req, res) => {
+  try {
+    let allOrders = await orderModel
+      .find({})
+      .populate("products", "-photo")
+      .sort({ createdAt: "-1" });
+
+    if (!allOrders) {
+      return NotFound(res, "No Orders Found!");
+    }
+
+    let orders = [];
+
+    allOrders.forEach((item) =>
+      item.products.forEach((prodt) => {
+        orders.push(prodt);
+      })
+    );
+
+    return res.status(200).send(orders);
   } catch (error) {
     return serverError(res, error, "Error While Fetching All Orders!");
   }
