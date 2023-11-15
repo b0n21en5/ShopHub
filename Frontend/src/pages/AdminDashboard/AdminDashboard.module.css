@@ -1,0 +1,104 @@
+/* Styles for Login */
+.login_cnt {
+  padding: 40px;
+  display: flex;
+  justify-content: center;
+}
+
+.login_cnt .admin_login {
+  width: 300px;
+  height: 300px;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  align-items: center;
+  gap: 20px;
+  background-color: #fff;
+  padding: 20px;
+}
+
+.admin_login input {
+  color: black;
+  background-color: white;
+  width: 100%;
+  padding-bottom: 5px;
+  border: none;
+  border-bottom: 0.5px solid rgba(215, 211, 211, 0.708);
+}
+
+.admin_login input:focus {
+  outline: none;
+  border-bottom: 1.5px solid #2874f0;
+}
+
+.admin_login .password {
+  display: flex;
+  align-items: center;
+  width: 100%;
+}
+
+.admin_login .login_btn {
+  font-weight: 500;
+  text-align: center;
+  color: white;
+  background-color: #fb641b;
+  padding: 10px 20px;
+  border: none;
+  border-radius: 2px;
+  box-shadow: rgba(0, 0, 0, 0.2) 0px 1px 2px 0px;
+  cursor: pointer;
+  width: 100%;
+  user-select: none;
+}
+
+/* Styles for Admin Dashboard */
+.admin_dashboard {
+  min-height: 100vh;
+  background-color: #fff;
+}
+
+.nav {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 20px 50px;
+  color: white;
+  background-color: #2874f0;
+}
+
+.nav .nav_menu {
+  display: flex;
+  gap: 30px;
+}
+
+.nav a {
+  color: white;
+}
+
+.nav a:hover {
+  color: white;
+}
+
+.admin_body {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
+  padding: 20px;
+}
+
+/* Styles for Page Data Section */
+
+.data_section {
+  display: flex;
+  flex-wrap: wrap;
+  padding: 20px 30px;
+}
+
+.data_section a {
+  margin: 10px;
+  width: 180px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}

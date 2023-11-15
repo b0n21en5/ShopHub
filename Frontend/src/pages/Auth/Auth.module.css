@@ -1,0 +1,121 @@
+.auth_cnt {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  height: 90vh;
+  padding-top: 15px;
+  margin-bottom: 30px;
+}
+
+/* Styles for Auth page Left side */
+.auth_left {
+  color: white;
+  padding: 40px 33px;
+  width: 28vw;
+  height: 100%;
+  background-color: #2874f0;
+  box-shadow: rgba(0, 0, 0, 0.08) 0px 2px 4px 0px;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.auth_left .head {
+  font-size: 1.8rem;
+  font-weight: 700;
+  margin-bottom: 20px;
+}
+
+.auth_left .sub_head {
+  font-size: 1.15rem;
+  color: #dbdbdb;
+}
+
+/* Styles for Auth page Right side */
+.auth_right {
+  width: 40vw;
+  height: 100%;
+  padding: 40px 35px;
+  background-color: white;
+  border-radius: 2px;
+  box-shadow: rgba(0, 0, 0, 0.08) 0px 2px 4px 0px;
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+}
+
+.auth_right input {
+  color: black;
+  background-color: white;
+  width: 100%;
+  padding-bottom: 5px;
+  border: none;
+  border-bottom: 0.5px solid rgba(215, 211, 211, 0.708);
+}
+
+.auth_right input:focus {
+  outline: none;
+  border-bottom: 1.5px solid #2874f0;
+}
+
+.auth_right .terms {
+  font-weight: 400;
+  font-size: 12px;
+  color: #878787;
+  margin: 20px 0;
+}
+
+.auth_right .terms .term_link {
+  color: #2874f0;
+}
+
+.auth_right .cta_button {
+  font-weight: 500;
+  text-align: center;
+  color: white;
+  background-color: #fb641b;
+  padding: 10px 20px;
+  border: none;
+  border-radius: 2px;
+  box-shadow: rgba(0, 0, 0, 0.2) 0px 1px 2px 0px;
+  cursor: pointer;
+  width: 100%;
+}
+
+.auth_right .sign_up {
+  font-size: 14px;
+  color: #2874f0;
+}
+
+.auth_right .log_in {
+  text-align: center;
+  color: #2874f0;
+  display: block;
+  padding: 10px 20px;
+  border-radius: 2px;
+  box-shadow: rgba(0, 0, 0, 0.2) 0px 2px 4px 0px;
+}
+
+/* Mobile Responsiveness - 412px */
+@media screen and (max-width: 412px) {
+  .auth_cnt{
+    height: 80vh;
+  }
+
+  .auth_left {
+    display: none;
+  }
+
+  .auth_right{
+    width: 100vw;
+    padding: 20px;
+  }
+
+  .auth_right .cta_button{
+    width: 95vw;
+    position: fixed;
+    bottom: 22px;
+    left: 5px;
+  }
+}
