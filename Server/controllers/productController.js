@@ -424,7 +424,7 @@ export const handleSuccessfulPayment = async (req, res) => {
 export const getSimilarProducts = async (req, res) => {
   try {
     const { catid, pid } = req.params;
-    console.log(catid)
+    console.log(catid);
 
     const similarProducts = await productModel
       .find({
@@ -440,5 +440,28 @@ export const getSimilarProducts = async (req, res) => {
     return res.status(200).send(similarProducts);
   } catch (error) {
     return serverError(res, error, "Error Fetching Similar Products!");
+  }
+};
+
+export const getNewlyAddedProduct = async (req, res) => {
+  try {
+    let { currPage, pageLimit } = req.query;
+    const skip = (currPage - 1) * pageLimit || 0;
+    const limit = pageLimit || 4;
+
+    const products = await productModel
+      .find()
+      .select("-photo")
+      .sort({ createdAt: -1 })
+      .skip(skip)
+      .limit(limit);
+
+    if (!products) {
+      return NotFound(res, "No Products Found!");
+    }
+
+    return res.status(200).send(products);
+  } catch (error) {
+    return serverError(res, error, "Error Fetching Newly Added Products!");
   }
 };
