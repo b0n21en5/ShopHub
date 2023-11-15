@@ -1,0 +1,260 @@
+.mb_row {
+  display: grid;
+  grid-template-columns: 255px 990px;
+  margin: 10px;
+}
+
+.mb_row .filter_type {
+  font-size: 14px;
+  font-weight: 600;
+  cursor: pointer;
+
+  display: flex;
+  justify-content: space-between;
+}
+
+.mb_row .filter_type .clear_all {
+  color: #007bff;
+  font-size: 12px;
+  font-weight: 600;
+}
+
+.mb_row .filters_cnt {
+  margin-right: 10px;
+  background-color: #fff;
+}
+
+.mb_row .filters_cnt .all_brands {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  font-weight: 400;
+}
+
+.mb_row .filters_cnt .cus_rat {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  font-size: 14px;
+  font-weight: 300;
+}
+
+.mb_row .filters_cnt .filter_applied {
+  display: flex;
+  flex-wrap: wrap;
+}
+
+.mb_filters_cnt {
+  display: none;
+}
+
+.pd_cnt {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+
+  background-color: #fff;
+  padding: 1rem;
+}
+
+.pd_cnt .results span {
+  font-size: 10px;
+}
+
+.pd_cnt .sorting {
+  display: flex;
+  gap: 10px;
+  margin-bottom: 20px;
+}
+
+.pd_cnt .sorting label {
+  font-size: 14px;
+  font-weight: 700;
+  cursor: text;
+}
+
+.pd_cnt .sorting .sortVal {
+  cursor: pointer;
+  font-size: 14px;
+}
+
+.sort_active {
+  color: #2874f0;
+  cursor: default;
+  border-bottom: 2px solid #2874f0;
+  font-weight: 500;
+}
+
+.pd_body {
+  display: flex;
+  flex-direction: row;
+
+  padding: 24px;
+  border-top: 1px solid rgba(186, 186, 186, 0.696);
+}
+
+.pd_body .pd_details_cnt {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-around;
+
+  width: 80%;
+}
+
+.pd_body .pd_details_cnt .pd_details {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+  width: 50%;
+}
+
+.pd_body .pd_details_cnt .pd_details ul li {
+  font-size: 14px;
+}
+
+.pd_body .pd_details .pd_title {
+  font-weight: 500;
+}
+
+.pd_body .pd_pricing .pd_price .off {
+  font-size: 14px;
+  font-weight: 600;
+  color: #388e3c;
+  margin-left: 10px;
+}
+
+/* Utility classes */
+.btn {
+  padding: 2px 4px;
+  font-size: 10px;
+  font-weight: 500;
+}
+
+.btn_lgt {
+  cursor: pointer;
+  font-size: 12px;
+  font-weight: 400;
+  background-color: #e0e0e0;
+  box-shadow: 0 2px 4px 0 hsla(0, 0%, 100%, 0.5);
+  border-radius: 3px;
+  margin: 2px 4px;
+  overflow: hidden;
+  max-width: 200px;
+  padding: 8px;
+}
+
+.btn_lgt:hover {
+  background-color: rgb(208, 208, 208);
+  text-decoration: line-through;
+}
+
+.btn_success {
+  height: 20px;
+  width: max-content;
+  color: white;
+  padding: 2px 6px;
+  background-color: #388e3c;
+  border-radius: 4px;
+  margin-top: 5px;
+}
+
+.bd_bottom {
+  padding: 15px 10px;
+  border-bottom: 0.5px solid rgba(190, 189, 189, 0.6);
+}
+
+.flex_column {
+  display: flex;
+  flex-direction: column;
+}
+
+/* Mobile responsiveness - 412px */
+
+@media screen and (max-width: 412px) {
+  .mb_row {
+    display: block;
+    margin: 0;
+  }
+
+  .filters_cnt {
+    display: none;
+  }
+
+  .mb_filters_cnt {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    font-size: 14px;
+    font-weight: 700;
+    border-bottom: 1px solid rgba(186, 186, 186, 0.696);
+  }
+
+  .mb_filters_cnt .mb_sorting {
+    border-right: 0.5px solid rgba(224, 219, 219, 0.525);
+  }
+
+  .mb_filters_cnt .mb_sorting,
+  .mb_filters_cnt .mb_filters {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 10px;
+    padding: 1rem;
+  }
+
+  .pd_cnt {
+    padding: 0;
+  }
+
+  .pd_cnt .sorting {
+    display: none;
+  }
+
+  .pd_cnt .results {
+    display: none;
+  }
+
+  .pd_body {
+    border: none;
+    border-bottom: 1px solid rgba(186, 186, 186, 0.696);
+  }
+
+  .pd_body img {
+    width: 96px;
+    height: 120px;
+    margin-right: 20px;
+  }
+
+  .pd_body .pd_details_cnt {
+    /* width: 40%; */
+    flex-direction: column;
+    justify-content: space-between;
+  }
+
+  .pd_body .pd_details_cnt .pd_details {
+    width: 100%;
+  }
+
+  .pd_body .pd_details_cnt .pd_details ul {
+    display: none;
+  }
+
+  .pd_body .pd_details .pd_title {
+    color: gray;
+    font-size: 14px;
+  }
+
+  .pd_body .pd_pricing .pd_price h4,
+  .pd_body .pd_pricing .pd_price div {
+    display: inline;
+  }
+
+  .pd_body .pd_pricing .pd_price strike {
+    font-size: 20px;
+    margin-left: 10px;
+  }
+
+  .pd_body .pd_pricing .pd_price .off {
+    font-size: 17px;
+    margin-left: 5px;
+  }
+}

@@ -1,0 +1,48 @@
+.search_modal_overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  z-index: 9999;
+}
+
+.search_modal {
+  color: rgb(143, 142, 142);
+  position: relative;
+  top: 65px;
+  left: 306px;
+  width: 525px;
+  height: 360px;
+  background-color: white;
+  border-bottom-right-radius: 10px;
+  border-bottom-left-radius: 10px;
+  padding: 20px;
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.2);
+}
+
+.result {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+}
+
+.result img {
+  margin-right: 20px;
+}
+
+.result svg {
+  color: rgb(143, 142, 142);
+  font-weight: 400;
+  margin-right: 10px;
+}
+
+/* Mobile Responsiveness - 412px */
+@media screen and (max-width: 412px) {
+  .search_modal {
+    left: 6px;
+    top: 100px;
+    width: 400px;
+    height: 600px;
+  }
+}

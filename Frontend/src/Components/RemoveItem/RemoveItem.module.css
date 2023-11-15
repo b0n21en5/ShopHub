@@ -1,0 +1,123 @@
+.remove_item_modal_overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background-color: rgba(36, 35, 35, 0.304);
+  z-index: 99999;
+}
+
+.remove_item_modal_overlay .remove_item_modal {
+  width: 406px;
+  height: 200px;
+  padding: 26px;
+  background-color: white;
+  position: absolute;
+  top: 180px;
+  left: 450px;
+  border-radius: 4px;
+  z-index: 999999;
+}
+
+.remove_item_modal_overlay svg {
+  color: white;
+  width: 40px;
+  height: 40px;
+  margin-left: 10px;
+  cursor: pointer;
+
+  position: absolute;
+  top: 175px;
+  left: 856px;
+}
+
+.remove_item_modal .heading {
+  font-size: 1.2rem;
+  font-weight: 600;
+  margin-bottom: 20px;
+}
+
+.remove_item_modal .buttons {
+  display: flex;
+  justify-content: space-between;
+  margin-top: 30px;
+}
+
+.remove_item_modal .btn {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  font-weight: 600;
+  opacity: 1;
+  width: 166px;
+  height: 50px;
+  padding: 24px 0;
+  border-radius: 2px;
+  cursor: pointer;
+}
+
+.remove_item_modal .cancel_btn {
+  border: 0.5px solid gray;
+}
+
+.remove_item_modal .cancel_btn:hover {
+  color: #2874f0;
+}
+
+.remove_item_modal .remove_btn {
+  color: white;
+  background-color: #2874f0;
+}
+
+/* Mobile Responsiveness - 412px */
+@media screen and (max-width: 412px) {
+  .remove_item_modal_overlay {
+    background-color: rgba(36, 35, 35, 0.626);
+  }
+
+  .remove_item_modal_overlay .remove_item_modal {
+    left: 31px;
+    top: 350px;
+    width: 350px;
+    height: 152px;
+    padding: 0;
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-start;
+  }
+
+  .remove_item_modal .heading {
+    font-size: 1rem;
+    font-weight: 500;
+    margin: 1.5rem 1.5rem 1rem;
+  }
+
+  .remove_item_modal span {
+    font-size: 14px;
+    font-weight: 600;
+    margin: 0.5rem 1.5rem;
+  }
+
+  .remove_item_modal .buttons {
+    margin: 0;
+  }
+
+  .remove_item_modal .btn {
+    font-size: 14px;
+  }
+
+  .remove_item_modal .btn {
+    width: 100%;
+  }
+
+  .remove_item_modal .cancel_btn {
+    color: gray;
+  }
+
+  .remove_item_modal .remove_btn {
+    color: gray;
+    background-color: #fff;
+    border: 0.5px solid gray;
+  }
+}

@@ -1,0 +1,103 @@
+.profile_cnt {
+  display: flex;
+  gap: 15px;
+  margin: 15px 60px 30px;
+}
+
+/* Profile left section */
+.profile_left {
+  width: 24vw;
+  height: 50vh;
+}
+
+.profile_left .title {
+  display: flex;
+  font-size: 12px;
+  font-weight: 400;
+  gap: 20px;
+  padding: 10px;
+  margin-bottom: 1rem;
+}
+
+.profile_left .title .user {
+  font-size: 1rem;
+  font-weight: 600;
+}
+
+.profile_left .settings {
+  color: grey;
+}
+
+.profile_left .settings .setting_sec {
+  border-bottom: 0.5px solid rgba(223, 217, 217, 0.555);
+}
+
+.profile_left .settings .setting_sec .head {
+  font-weight: 600;
+  display: flex;
+  gap: 20px;
+  align-items: center;
+  padding: 20px;
+}
+
+.profile_left .settings .setting_sec .head svg {
+  color: #2874f0;
+  width: 24px;
+  height: 20px;
+}
+
+.profile_left .settings .setting_sec .set {
+  font-size: 14px;
+  color: black;
+  padding: 10px 64px;
+  cursor: pointer;
+}
+
+.profile_left .settings .setting_sec .set:hover {
+  color: #2874f0;
+  background-color: #f5faff;
+}
+
+.profile_left .settings .setting_sec .active {
+  color: #2874f0;
+  font-weight: 600;
+}
+
+.profile_left .settings .link,
+.profile_left .settings .link a {
+  color: gray;
+  cursor: pointer;
+}
+
+.profile_left .settings .link:hover,
+.profile_left .settings .link a:hover {
+  color: #2874f0 !important;
+}
+
+/* Profile right section */
+.profile_right {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  width: 67vw;
+  min-height: 80vh;
+  height: max-content;
+}
+
+.profile_right .edit_details {
+  padding: 20px 40px;
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+}
+
+/* Utility classes */
+.bg_white_shdw {
+  background-color: white;
+  border-radius: 2px;
+  box-shadow: rgba(0, 0, 0, 0.08) 0px 2px 4px 0px;
+}
+
+.d_flex {
+  display: flex;
+}

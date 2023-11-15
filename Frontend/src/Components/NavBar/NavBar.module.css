@@ -1,0 +1,275 @@
+.navbar {
+  display: flex;
+  padding: 10px 60px;
+  background-color: #fff;
+  position: sticky;
+  top: 0;
+  z-index: 9999;
+}
+
+.navbar .mb_nav_menu {
+  display: none;
+}
+
+.navbar .seller {
+  display: block;
+}
+
+.search_bar {
+  display: flex;
+  align-items: center;
+  font-size: 1.2rem;
+  border: none;
+  border-radius: 6px;
+  background-color: #f0f5ff;
+  padding: 5px 10px;
+}
+
+.search_bar input {
+  border: none;
+  width: 472px;
+  color: black;
+  margin-left: 5px;
+  font-size: normal;
+  font-weight: 400;
+  border-radius: 6px;
+  background-color: transparent;
+}
+
+.search_bar input:focus {
+  outline: none;
+}
+
+.search_bar svg {
+  color: rgb(114, 114, 114);
+  margin: 5px;
+  cursor: pointer;
+}
+
+.sign_in_cnt {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  cursor: pointer;
+  padding: 8px;
+  border-radius: 8px;
+}
+
+.sign_in_cnt:hover {
+  color: #fff;
+  background-color: #2a55e5;
+}
+
+.sign_in_cnt .user {
+  /* font-size: 1.5rem; */
+}
+
+.sign_in_cnt span {
+  font-size: 1.1rem;
+}
+
+.sign_in_cnt .angle {
+  font-size: 0.7rem;
+}
+
+.cart_box {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  font-size: 1.2rem;
+}
+
+.cart_count {
+  font-size: 12px;
+  color: white;
+  background-color: #ff6161;
+  width: 15px;
+  height: 20px;
+  padding: 5px 10px;
+  margin: 0;
+  border-radius: 35%;
+  border: white;
+
+  position: absolute;
+  top: 10px;
+  right: 98px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.cart_name {
+  padding-left: 10px;
+}
+
+.category_cnt {
+  display: flex;
+  align-items: center;
+  gap: 40px;
+  font-size: 14px;
+  font-weight: 600;
+  height: 40px;
+  padding: 0 100px;
+  background-color: white;
+  border-radius: 0;
+  box-shadow: rgba(0, 0, 0, 0.16) 0px 1px 1px 0px;
+}
+
+/* Navbar css for other pages except home */
+.dodg_blue {
+  font-weight: 600;
+  padding: 10px 150px;
+}
+
+.dodg_blue .seller {
+  color: white;
+}
+
+.dodg_blue .search_bar {
+  font-size: 14px;
+  width: 410px;
+  height: 36px;
+  border-radius: 2px;
+}
+
+.dodg_blue .search_bar svg {
+  font-size: 1.15rem;
+  color: #2874f0;
+}
+
+.dodg_blue,
+.dodg_blue .cart_box svg,
+.dodg_blue .cart_box .cart_name {
+  color: white;
+  background-color: #2874f0;
+}
+
+.dodg_blue .sign_in_cnt {
+  font-weight: 600;
+  color: #2874f0;
+  background-color: #fff;
+  padding: 5px 40px;
+  border-radius: 2px;
+}
+
+.dodg_blue .user_clr {
+  color: #fff;
+  background-color: #2874f0;
+}
+
+.dodg_blue .cart_count {
+  right: 188px;
+}
+
+/* Mobile Responsiveness - 412px*/
+@media screen and (max-width: 412px) {
+  .navbar {
+    padding: 10px;
+    padding-bottom: 8px;
+    background-color: rgb(40, 116, 240);
+  }
+
+  /* Additional styles for hiding/showing the navbar on scroll */
+  .navbar-hidden {
+    transform: translateY(-100%);
+    transition: transform 0.3s ease-in-out;
+  }
+
+  .navbar-visible {
+    transform: translateY(0);
+    transition: transform 0.3s ease-in-out;
+  }
+
+  .scroll-up .navbar-hidden,
+  .scroll-down .navbar-visible {
+    transform: translateY(0);
+  }
+
+  .scroll-up .navbar-visible,
+  .scroll-down .navbar-hidden {
+    transform: translateY(-100%);
+  }
+
+  .navbar .logo_cnt {
+    display: none;
+  }
+
+  .navbar .seller {
+    display: none;
+  }
+
+  .navbar a img {
+    /* width: 100px;
+    height: 30px; */
+    padding-left: 10px;
+  }
+
+  .navbar .mb_nav_menu {
+    color: #fff;
+    width: 100%;
+    display: flex;
+    justify-content: space-between;
+
+    padding-bottom: 10px;
+    border-bottom: 0.1px solid rgba(230, 224, 224, 0.502);
+  }
+
+  .mb_nav_menu .mb_cart_box {
+    color: #fff;
+  }
+
+  .mb_cart_box .mb_cart_count {
+    font-size: 0.5rem;
+    padding: 6px;
+    width: 11px;
+    height: 11px;
+    border-radius: 50%;
+    border: 2px solid #fff;
+    background-color: #d32f2f;
+    position: absolute;
+    top: 5px;
+    right: 40px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+
+  .navbar .mb_nav_menu .mb_nav_right {
+    display: flex;
+    gap: 25px;
+    justify-content: flex-end;
+  }
+
+  .navbar .mb_nav_menu .mb_nav_right .mb_user {
+    color: #fff;
+  }
+
+  .search_bar,
+  .dodg_blue .search_bar {
+    margin-top: 10px;
+    width: 390px;
+    border-radius: 2px;
+  }
+
+  .search_bar input {
+    font-size: 14px;
+    width: 380px;
+  }
+
+  .search_bar svg {
+    color: rgba(128, 128, 128, 0.849);
+    font-size: 0.9rem;
+  }
+
+  .navbar .sign_in_cnt {
+    display: none;
+  }
+
+  .cart_box {
+    display: none;
+  }
+
+  .category_cnt {
+    display: none;
+  }
+}
