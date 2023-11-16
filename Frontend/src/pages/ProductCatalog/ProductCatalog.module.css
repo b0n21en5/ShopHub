@@ -44,6 +44,10 @@
   flex-wrap: wrap;
 }
 
+.mb_apply_btn {
+  display: none;
+}
+
 .mb_filters_cnt {
   display: none;
 }
@@ -123,6 +127,39 @@
   margin-left: 10px;
 }
 
+.d_flex {
+  display: flex;
+  flex-wrap: wrap;
+}
+
+.d_flex .pd_body {
+  flex-direction: column;
+  width: 250px;
+  font-size: 14px;
+}
+
+.d_flex .pd_body:hover {
+  box-shadow: 0 0 10px 4px rgba(0, 0, 0, 0.1);
+}
+
+.d_flex .pd_body .pd_details_cnt {
+  flex-direction: column;
+  width: 100%;
+}
+
+.d_flex .pd_body .pd_details {
+  width: 100%;
+}
+
+.d_flex .pd_body .pd_details .pd_title {
+}
+
+.d_flex .pd_body .pd_pricing .pd_price {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
 /* Utility classes */
 .btn {
   padding: 2px 4px;
@@ -177,7 +214,23 @@
   }
 
   .filters_cnt {
-    display: none;
+    position: absolute;
+    width: 100vw;
+    height: 100%;
+  }
+
+  .mb_apply_btn {
+    position: fixed;
+    bottom: 10px;
+    right: 10px;
+    color: #fff;
+    width: 200px;
+    height: 40px;
+    background-color: rgb(255, 88, 0);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 4px;
   }
 
   .mb_filters_cnt {
@@ -206,7 +259,14 @@
   }
 
   .pd_cnt .sorting {
-    display: none;
+    display: flex;
+    flex-direction: column;
+    font-weight: 500;
+    padding: 10px;
+    position: absolute;
+    bottom: 0;
+    width: 200px;
+    background-color: #fff;
   }
 
   .pd_cnt .results {
@@ -225,7 +285,6 @@
   }
 
   .pd_body .pd_details_cnt {
-    /* width: 40%; */
     flex-direction: column;
     justify-content: space-between;
   }
@@ -256,5 +315,10 @@
   .pd_body .pd_pricing .pd_price .off {
     font-size: 17px;
     margin-left: 5px;
+  }
+
+  /* Utills */
+  .d_non {
+    display: none !important;
   }
 }

@@ -5,16 +5,23 @@ import axios from "axios";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import {
   faAngleRight,
+  faFilter,
   faMagnifyingGlass,
   faXmark,
 } from "@fortawesome/free-solid-svg-icons";
 import { Checkbox } from "antd";
+import toast from "react-hot-toast";
 import styles from "./Order.module.css";
 
 const Order = () => {
   const [orders, setOrders] = useState([]);
   const [filterApplied, setFilterApplied] = useState([]);
-  const [filter, setFilter] = useState({ status: [], search: "", time: [] });
+  const [filter, setFilter] = useState({
+    status: [],
+    search: "",
+    time: [],
+    mbVisible: false,
+  });
 
   const { user } = useSelector((state) => state.user);
 
@@ -35,8 +42,6 @@ const Order = () => {
     "Dec",
   ];
 
-  const date = new Date();
-
   const orderStatus = ["On the way", "Delivered", "Cancelled", "Returned"];
   const orderTime = [
     { title: "Last 30 Days", value: 30 },
@@ -48,10 +53,9 @@ const Order = () => {
       const { data } = await axios.get(
         `/api/auth/single-user-orders?search=${filter.search}&status=${filter.status}&time=${filter.time}`
       );
-      console.log(data);
       setOrders(data);
     } catch (error) {
-      console.log(error);
+      toast.error(error.response.data.message);
     }
   };
 
@@ -88,12 +92,13 @@ const Order = () => {
         ...prev,
         time: prev.time.filter((cr) => cr !== item.value),
       }));
-      setFilterApplied(filterApplied.filter(filt !== item.title));
+      setFilterApplied(filterApplied.filter((filt) => filt !== item.title));
     }
   };
 
   useEffect(() => {
     if (!filter.search) getAllOrders();
+    else if (window.innerWidth <= 412) getAllOrders();
   }, [filter]);
 
   // Function to remove applied filter
@@ -124,7 +129,7 @@ const Order = () => {
   };
 
   const handleClearBtn = () => {
-    setFilter({ search: "", status: [], time: [] });
+    setFilter({ search: "", status: [], time: [], mbVisible: false });
     setFilterApplied([]);
   };
 
@@ -139,7 +144,11 @@ const Order = () => {
       </div>
       <div className={styles.order_cnt}>
         {/* Filters Section */}
-        <div className={styles.order_left}>
+        <div
+          className={`${styles.order_left} ${
+            filter.mbVisible ? "" : styles.d_non
+          }`}
+        >
           <div className={styles.filter_section}>
             <div className={styles.filter_types}>
               <div
@@ -204,6 +213,14 @@ const Order = () => {
               ))}
             </div>
           </div>
+
+          {/* Mobile Apply button */}
+          <div
+            className={styles.mb_apply_btn}
+            onClick={() => setFilter((p) => ({ ...p, mbVisible: false }))}
+          >
+            Apply
+          </div>
         </div>
 
         <div className={styles.order_right}>
@@ -230,6 +247,17 @@ const Order = () => {
               <FontAwesomeIcon icon={faMagnifyingGlass} />
               Search Orders
             </div>
+
+            {/* Mobile Filter button */}
+            <div
+              className={styles.mb_filter}
+              onClick={() =>
+                setFilter((p) => ({ ...p, mbVisible: !p.mbVisible }))
+              }
+            >
+              <FontAwesomeIcon icon={faFilter} />
+              Filters
+            </div>
           </div>
 
           {/* All orders listing */}
@@ -238,35 +266,35 @@ const Order = () => {
               {orders?.map((item) => {
                 return item?.products?.map((ord) => (
                   <div className={styles.all_orders} key={ord._id}>
-                    <div style={{ display: "flex" }}>
-                      <img
-                        src={`/api/products/photo/${ord._id}`}
-                        alt={ord.name}
-                        width={80}
-                        height={60}
-                      />
+                    <img
+                      src={`/api/products/photo/${ord._id}`}
+                      alt={ord.name}
+                      width={80}
+                      height={60}
+                    />
+                    <div className={styles.product_details}>
                       <div className={styles.product}>
                         {ord.name.length > 20
                           ? ord.name.substr(0, 40) + "..."
                           : ord.name}
                       </div>
-                    </div>
-                    <div className={styles.price}>
-                      ₹{parseInt((ord.price * (100 - ord.discount)) / 100)}
-                    </div>
-                    <div>
-                      <div className={styles.date}>{`${item.status} on ${
-                        months[new Date(item.updatedAt).getMonth()]
-                      } ${new Date(item.updatedAt).getDate()}, ${new Date(
-                        item.updatedAt
-                      ).getFullYear()}`}</div>
-                      {item.status === "Delivered" ? (
-                        <div style={{ fontSize: "12px" }}>
-                          Your item has been delivered
-                        </div>
-                      ) : (
-                        ""
-                      )}
+                      <div className={styles.price}>
+                        ₹{parseInt((ord.price * (100 - ord.discount)) / 100)}
+                      </div>
+                      <div>
+                        <div className={styles.date}>{`${item.status} on ${
+                          months[new Date(item.updatedAt).getMonth()]
+                        } ${new Date(item.updatedAt).getDate()}, ${new Date(
+                          item.updatedAt
+                        ).getFullYear()}`}</div>
+                        {item.status === "Delivered" ? (
+                          <div style={{ fontSize: "12px" }}>
+                            Your item has been delivered
+                          </div>
+                        ) : (
+                          ""
+                        )}
+                      </div>
                     </div>
                   </div>
                 ));

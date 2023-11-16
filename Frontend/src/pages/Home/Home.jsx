@@ -5,6 +5,7 @@ import { Link } from "react-router-dom";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faAngleDown, faAngleUp } from "@fortawesome/free-solid-svg-icons";
 import ProductList from "../../Components/ProductList/ProductList";
+import toast from "react-hot-toast";
 
 const Home = () => {
   const [categories, setCategories] = useState([]);
@@ -15,7 +16,7 @@ const Home = () => {
       const { data } = await axios.get("/api/category/get-all");
       setCategories(data);
     } catch (error) {
-      console.log(error);
+      toast.error(error.response.data.message);
     }
   };
 

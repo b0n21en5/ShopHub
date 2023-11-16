@@ -1,7 +1,8 @@
 import axios from "axios";
-import styles from "./ProductList.module.css";
 import { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
+import styles from "./ProductList.module.css";
+import toast from "react-hot-toast";
 
 const ProductList = ({ category }) => {
   const [products, setProducts] = useState([]);
@@ -12,13 +13,17 @@ const ProductList = ({ category }) => {
       limit = 4;
     }
 
-    const { data } = await axios.get(
-      `/api/products/get-by-category/${
-        category._id
-      }?currPage=${1}&pageLimit=${limit}`
-    );
+    try {
+      const { data } = await axios.get(
+        `/api/products/get-by-category/${
+          category._id
+        }?currPage=${1}&pageLimit=${limit}`
+      );
 
-    setProducts(data);
+      setProducts(data);
+    } catch (error) {
+      toast.error(error.response.data.message);
+    }
   };
 
   useEffect(() => {

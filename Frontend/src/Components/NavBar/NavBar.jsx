@@ -13,8 +13,9 @@ import SearchModal from "../SearchModal/SearchModal";
 import UserMenu from "../UserMenu/UserMenu";
 import axios from "axios";
 import logo from "../../assets/logo.png";
-import styles from "./NavBar.module.css";
 import { useSelector } from "react-redux";
+import toast from "react-hot-toast";
+import styles from "./NavBar.module.css";
 
 const NavBar = () => {
   const [categories, setCategories] = useState([]);
@@ -43,7 +44,9 @@ const NavBar = () => {
   };
 
   useEffect(() => {
-    window.addEventListener("scroll", handleScroll);
+    if (window.innerWidth <= 412) {
+      window.addEventListener("scroll", handleScroll);
+    }
 
     return () => {
       window.removeEventListener("scroll", handleScroll);
@@ -55,7 +58,7 @@ const NavBar = () => {
       const { data } = await axios.get("/api/category/get-all");
       setCategories(data);
     } catch (error) {
-      console.log(error);
+      toast.error(error.response.data.message);
     }
   };
 
@@ -78,13 +81,15 @@ const NavBar = () => {
     <>
       <div
         className={`${styles.navbar} ${path !== "" ? styles.dodg_blue : ""} ${
-          scrollDirection === "scroll-down" ? "navbar-hidden" : "navbar-visible"
+          scrollDirection === "scroll-down"
+            ? styles.navbar_hidden
+            : styles.navbar_visible
         }`}
         onMouseEnter={() => setIsVisible({ ...isVisible, menu: false })}
       >
         {/* Nav Menu for Mobile  */}
         <div className={styles.mb_nav_menu}>
-          <div>
+          <div style={{ display: "flex", alignItems: "center" }}>
             <FontAwesomeIcon
               icon={faBars}
               onClick={() => setIsVisible({ ...isVisible, menu: true })}
@@ -157,7 +162,7 @@ const NavBar = () => {
         >
           {path == "" ? (
             <>
-              <FontAwesomeIcon className="user" icon={faUser} />
+              <FontAwesomeIcon className={styles.user} icon={faUser} />
               <span>{user ? user.username : "Sign in"}</span>
               <FontAwesomeIcon
                 className={styles.angle}
@@ -193,7 +198,11 @@ const NavBar = () => {
         {path !== "cart" && (
           <Link to="/cart" className={styles.cart_box}>
             <div>
-              {cartCount ? <span className={styles.cart_count}>{cartCount}</span> : ""}
+              {cartCount ? (
+                <span className={styles.cart_count}>{cartCount}</span>
+              ) : (
+                ""
+              )}
               <FontAwesomeIcon icon={faCartShopping} />
             </div>
             <span className={styles.cart_name}>Cart</span>

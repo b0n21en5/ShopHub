@@ -39,7 +39,6 @@ const Auth = () => {
         phone: parseInt(auth.login),
         password: auth.password,
       });
-      console.log(data);
 
       if (data) {
         dispatch(setUser(data));

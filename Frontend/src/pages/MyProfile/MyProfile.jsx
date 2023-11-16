@@ -14,6 +14,7 @@ import { useEffect, useState } from "react";
 import ProfileInputField from "../../Components/ProfileInputField/ProfileInputField";
 import styles from "./MyProfile.module.css";
 import axios from "axios";
+import toast from "react-hot-toast";
 
 const MyProfile = () => {
   const [edit, setEdit] = useState("profile");
@@ -44,8 +45,11 @@ const MyProfile = () => {
         phone: phone.value,
         address: address.value,
       });
+      if (data) {
+        toast.success("Account Details Updated!");
+      }
     } catch (error) {
-      console.log(error);
+      toast.error(error.response.data.message);
     }
   };
 

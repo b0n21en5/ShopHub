@@ -1,10 +1,11 @@
 import ReactDOM from "react-dom";
-import styles from "./SearchModal.module.css";
 import { useEffect, useState } from "react";
 import axios from "axios";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faMagnifyingGlass } from "@fortawesome/free-solid-svg-icons";
 import { Link } from "react-router-dom";
+import toast from "react-hot-toast";
+import styles from "./SearchModal.module.css";
 
 const SearchModal = ({ setIsVisible, searchTerm }) => {
   const [searchData, setSearchData] = useState([]);
@@ -14,7 +15,7 @@ const SearchModal = ({ setIsVisible, searchTerm }) => {
       const { data } = await axios.get("/api/category/get-all");
       setSearchData(data);
     } catch (error) {
-      console.log(error);
+      toast.error(error.response.data.message);
     }
   };
 
@@ -23,7 +24,7 @@ const SearchModal = ({ setIsVisible, searchTerm }) => {
       const { data } = await axios.get(`/api/products/search/${searchTerm}`);
       setSearchData(data);
     } catch (error) {
-      console.log(error);
+      toast.error(error.response.data.message);
     }
   };
 
