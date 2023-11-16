@@ -2,15 +2,12 @@
   text-align: center;
   padding: 40px 0;
   width: 96vw;
-  height: 90vh;
   background: white;
   margin: 10px 20px;
 }
 
 .details_cnt .details {
   display: flex;
-  /* justify-content: center; */
-  /* align-items: center; */
   gap: 100px;
 }
 
@@ -20,6 +17,7 @@
   position: sticky;
   top: 140px;
   left: 100px;
+  height: 540px;
 }
 
 .details .detail_left img {
@@ -57,10 +55,71 @@
   background-color: #fb641b;
 }
 
+/* Styles for right side of details */
 .details .detail_right {
   display: flex;
   flex-direction: column;
   align-items: flex-start;
+  width: 100%;
+}
+
+.detail_right .p_name {
+  font-size: 18px;
+}
+
+.detail_right .pd_price {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.detail_right .pd_price .pay {
+  font-size: 28px;
+  font-weight: 500;
+}
+
+.detail_right strike {
+  color: gray;
+}
+
+.detail_right .off {
+  font-weight: 600;
+  color: #388e3c;
+}
+
+.detail_right .sec {
+  font-size: 14px;
+  margin: 1.5rem 0;
+  font-weight: 600;
+  display: flex;
+}
+
+.detail_right .sec .secLeft {
+  color: #878787;
+  padding-right: 2rem;
+}
+
+/* Styles for Specifications */
+.detail_right .specs_cnt {
+  width: 98%;
+  border: 1px solid rgba(181, 179, 179, 0.527);
+  border-radius: 2px;
+}
+
+.specs_cnt .spec_heading {
+  font-size: 1.5rem;
+  font-weight: 600;
+  padding: 1.5rem;
+  text-align: start;
+  border-bottom: 1px solid rgba(181, 179, 179, 0.527);
+}
+
+.specs_cnt .specs {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 10px;
+  padding: 1rem;
 }
 
 /* Styles for Similar Prodcts */
@@ -97,7 +156,7 @@
   width: 100%;
 }
 
-.similar_products_cnt .similar_product .review .rating {
+.rating {
   font-size: 10px;
   font-weight: 500;
   height: 20px;

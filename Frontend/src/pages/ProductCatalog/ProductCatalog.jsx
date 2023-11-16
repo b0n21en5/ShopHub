@@ -14,6 +14,7 @@ import NoResults from "../../Components/NoResults/NoResults";
 import axios from "axios";
 
 import styles from "./ProductCatalog.module.css";
+import toast from "react-hot-toast";
 
 const ProductCatalog = () => {
   const [fetchedData, setFetchedData] = useState([]);
@@ -29,6 +30,7 @@ const ProductCatalog = () => {
   const [discounts, setDiscounts] = useState({ isVisible: true, checks: [] });
   const [filterApplied, setFilterApplied] = useState([]);
   const [rating, setRating] = useState({ sel: 1, isVisible: true });
+  const [mbVisible, setMbVisible] = useState({ sort: false, filter: false });
 
   const path = useLocation().pathname.substr(1);
 
@@ -45,13 +47,12 @@ const ProductCatalog = () => {
           const parsedDesc = JSON.parse(item.desc);
           return { ...item, desc: parsedDesc };
         } catch (e) {
-          console.error("Error parsing 'desc' property:", e);
           return item;
         }
       });
       setFetchedData(newData);
     } catch (error) {
-      console.log(error);
+      toast.error(error.response.data.message);
     }
   };
 
@@ -62,7 +63,7 @@ const ProductCatalog = () => {
 
       if (cat) return cat._id;
     } catch (error) {
-      console.log(error);
+      toast.error(error.response.data.message);
     }
   };
 
@@ -74,7 +75,7 @@ const ProductCatalog = () => {
       );
       setBrands({ ...brands, data: data });
     } catch (error) {
-      console.log(error);
+      toast.error(error.response.data.message);
     }
   };
 
@@ -197,11 +198,23 @@ const ProductCatalog = () => {
     setRating((p) => ({ ...p, sel: 1 }));
   };
 
+  const handleSortOptionClick = (sortBy, sortOrder) => {
+    setSort({ by: sortBy, order: sortOrder });
+
+    if (window.innerWidth <= 412) {
+      setMbVisible({ sort: false, filter: false });
+    }
+  };
+
   return (
     <div>
       <div className={styles.mb_row}>
         {/* Desktop Filters options */}
-        <div className={styles.filters_cnt}>
+        <div
+          className={`${styles.filters_cnt} ${
+            mbVisible.filter ? "" : styles.d_non
+          }`}
+        >
           <div
             className={`${styles.filter_type} ${styles.bd_bottom} ${styles.flex_column}`}
           >
@@ -425,21 +438,34 @@ const ProductCatalog = () => {
               </>
             )}
           </div>
+
+          {/* Mobile Display Apply button */}
+          <div
+            className={styles.mb_apply_btn}
+            onClick={() => setMbVisible({ sort: false, filter: false })}
+          >
+            Apply
+          </div>
         </div>
 
         {/* Mobile Filter Options */}
         <div className={styles.mb_filters_cnt}>
-          <div className={styles.mb_sorting}>
+          <div
+            className={styles.mb_sorting}
+            onClick={() => setMbVisible((p) => ({ ...p, sort: !p.sort }))}
+          >
             <FontAwesomeIcon icon={faArrowDownWideShort} />
             Sort
           </div>
-          <div className={styles.mb_filters}>
+          <div
+            className={styles.mb_filters}
+            onClick={() => setMbVisible((p) => ({ ...p, filter: !p.filter }))}
+          >
             <FontAwesomeIcon icon={faFilter} />
             Filter
           </div>
         </div>
 
-        {/* Sorting products section */}
         <div className={styles.pd_cnt}>
           <div className={styles.results}>
             {path}&nbsp;
@@ -451,13 +477,19 @@ const ProductCatalog = () => {
               )
             </span>
           </div>
-          <div className={styles.sorting}>
+
+          {/* Sorting products section */}
+          <div
+            className={`${styles.sorting} ${
+              mbVisible.sort ? "" : styles.d_non
+            }`}
+          >
             <label>Sort By</label>
             <div
               className={`${styles.sortVal} ${
                 sort.by === "rating" ? styles.sort_active : ""
               }`}
-              onClick={() => setSort({ by: "rating", order: "desc" })}
+              onClick={() => handleSortOptionClick("rating", "desc")}
             >
               Popularity
             </div>
@@ -467,7 +499,7 @@ const ProductCatalog = () => {
                   ? styles.sort_active
                   : ""
               }`}
-              onClick={() => setSort({ by: "price", order: "asc" })}
+              onClick={() => handleSortOptionClick("price", "asc")}
             >
               Price -- Low to High
             </div>
@@ -477,7 +509,7 @@ const ProductCatalog = () => {
                   ? styles.sort_active
                   : ""
               }`}
-              onClick={() => setSort({ by: "price", order: "desc" })}
+              onClick={() => handleSortOptionClick("price", "desc")}
             >
               Price -- High to Low
             </div>
@@ -485,7 +517,7 @@ const ProductCatalog = () => {
               className={`${styles.sortVal} ${
                 sort.by === "createdAt" ? styles.sort_active : ""
               }`}
-              onClick={() => setSort({ by: "createdAt", order: "asc" })}
+              onClick={() => handleSortOptionClick("createdAt", "asc")}
             >
               Newest First
             </div>
@@ -493,63 +525,82 @@ const ProductCatalog = () => {
 
           {/* Products Container section */}
           {fetchedData.length ? (
-            fetchedData.map((item) => (
-              <Link
-                to={`/${path}/${item._id}`}
-                target="_blank"
-                key={item._id}
-                className={styles.pd_body}
-              >
-                <img
-                  src={`/api/products/photo/${item._id}`}
-                  width={190}
-                  height={220}
-                  alt={item.name}
-                />
-                <div className={styles.pd_details_cnt}>
-                  <div className={styles.pd_details}>
-                    <div className={styles.pd_title}>
-                      <div>{item.name}</div>
-                      <div className={`${styles.btn} ${styles.btn_success}`}>
-                        {item.rating}
-                        <FontAwesomeIcon
-                          icon={faStar}
-                          style={{ marginLeft: "3px" }}
-                        />
+            <div
+              className={
+                path !== "Mobiles" && window.innerWidth > 412
+                  ? styles.d_flex
+                  : ""
+              }
+            >
+              {fetchedData?.map((item) => (
+                <Link
+                  to={`/${path}/${item._id}`}
+                  target="_blank"
+                  key={item._id}
+                  className={styles.pd_body}
+                >
+                  <img
+                    src={`/api/products/photo/${item._id}`}
+                    width={190}
+                    height={220}
+                    alt={item.name}
+                  />
+                  <div className={styles.pd_details_cnt}>
+                    <div className={styles.pd_details}>
+                      <div className={styles.pd_title}>
+                        <div>{item.name}</div>
+                        <div className={`${styles.btn} ${styles.btn_success}`}>
+                          {item.rating}
+                          <FontAwesomeIcon
+                            icon={faStar}
+                            style={{ marginLeft: "3px" }}
+                          />
+                        </div>
                       </div>
+                      {path === "Mobiles" && (
+                        <ul>
+                          <li>
+                            {item?.desc?.ram} RAM | {item?.desc?.storage} ROM{" "}
+                          </li>
+                          <li>{item?.desc?.camera} Camera</li>
+                          <li>{item?.desc?.battery} Li-ion Ploymer Battery</li>
+                          <li>{item?.desc?.cpu} Processor</li>
+                        </ul>
+                      )}
+                      {path === "Fashion" && (
+                        <div>
+                          Size:{" "}
+                          {item?.desc?.size?.map((i) => i.toUpperCase() + ",")}
+                        </div>
+                      )}
                     </div>
-                    <ul>
-                      <li>
-                        {item?.desc?.ram} RAM | {item?.desc?.storage} ROM{" "}
-                      </li>
-                      <li>{item?.desc?.display} Display</li>
-                      <li>{item?.desc?.camera} Camera</li>
-                      <li>{item?.desc?.battery} Li-ion Ploymer Battery</li>
-                      <li>{item?.desc?.cpu} Processor</li>
-                    </ul>
-                  </div>
-                  <div className={styles.pd_pricing}>
-                    <div className={styles.pd_price}>
-                      <h4>
-                        {" "}
-                        ₹
-                        {item.discount
-                          ? parseInt((item.price * (100 - item.discount)) / 100)
-                          : item.price}
-                      </h4>
-                      <div>
-                        <strike style={{ color: "gray" }}>{item.price}</strike>
-                        <span className={styles.off}>
+                    <div className={styles.pd_pricing}>
+                      <div className={styles.pd_price}>
+                        <h4>
                           {" "}
-                          {item.discount}% off
-                        </span>
+                          ₹
+                          {item.discount
+                            ? parseInt(
+                                (item.price * (100 - item.discount)) / 100
+                              )
+                            : item.price}
+                        </h4>
+                        <div>
+                          <strike style={{ color: "gray" }}>
+                            {item.price}
+                          </strike>
+                          <span className={styles.off}>
+                            {" "}
+                            {item.discount}% off
+                          </span>
+                        </div>
                       </div>
+                      <div>Delivery in {item.delivery} days </div>
                     </div>
-                    <div>Delivery in {item.delivery} days </div>
                   </div>
-                </div>
-              </Link>
-            ))
+                </Link>
+              ))}
+            </div>
           ) : (
             <NoResults />
           )}

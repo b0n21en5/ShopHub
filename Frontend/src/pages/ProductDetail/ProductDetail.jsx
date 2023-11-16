@@ -9,6 +9,7 @@ import {
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import logo from "../../assets/logo.png";
 import styles from "./ProductDetail.module.css";
+import toast from "react-hot-toast";
 
 const ProductDetail = () => {
   const [product, setProduct] = useState({});
@@ -18,13 +19,32 @@ const ProductDetail = () => {
 
   const navigate = useNavigate();
 
+  const months = [
+    "Jan",
+    "Feb",
+    "Mar",
+    "Apr",
+    "May",
+    "Jun",
+    "Jul",
+    "Aug",
+    "Sep",
+    "Oct",
+    "Nov",
+    "Dec",
+  ];
+
+  const date = new Date();
+
   const fetchProductDetail = async () => {
     try {
       const { data } = await axios.get(`/api/products/get-product/${pid}`);
-      data.desc = JSON.parse(data.desc);
+      if (data.desc) {
+        data.desc = JSON.parse(data.desc);
+      }
       setProduct(data);
     } catch (error) {
-      console.log(error);
+      toast.error(error.response.data.message);
     }
   };
 
@@ -39,7 +59,7 @@ const ProductDetail = () => {
       );
       setSimilarProducts(data);
     } catch (error) {
-      console.log(error);
+      toast.error(error.response.data.message);
     }
   };
 
@@ -58,6 +78,7 @@ const ProductDetail = () => {
 
     cartArray.push(pid);
     localStorage.setItem("cart", JSON.stringify(cartArray));
+    toast.success("item added to cart");
     navigate("/cart");
   };
 
@@ -82,7 +103,7 @@ const ProductDetail = () => {
     );
 
     if (!res) {
-      alert("Razorpay SDK failed to load. Are you online?");
+      toast.error("Razorpay SDK failed to load. Are you online?");
       return;
     }
 
@@ -91,7 +112,7 @@ const ProductDetail = () => {
     });
 
     if (!result) {
-      alert("Server error. Are you online?");
+      toast.error("Server error. Are you online?");
       return;
     }
 
@@ -118,7 +139,10 @@ const ProductDetail = () => {
           products: [product],
         });
 
-        alert(result.data.status);
+        if (result.data.status === "Payment successful") {
+          toast.success("Order Placed!");
+          navigate("/account/orders");
+        }
       },
       prefill: {
         name: "",
@@ -167,14 +191,68 @@ const ProductDetail = () => {
             </div>
           </div>
           <div className={styles.detail_right}>
-            <span>Model: {product.name}</span>
-            <span>Price: {product.price}</span>
-            <span>Ram: {product.desc?.ram}</span>
-            <span>Storage: {product.desc?.storage}</span>
-            <span>Camera: {product.desc?.camera}</span>
-            <span>Battery: {product.desc?.battery}</span>
-            <span>CPU: {product.desc?.cpu}</span>
-            <span>Quantity: {product.quantity}</span>
+            <div className={styles.p_name}>{product.name}</div>
+            <div className={`${styles.rating}`}>
+              {product.rating}
+              <FontAwesomeIcon icon={faStar} />
+            </div>
+            <div className={styles.off}>Special price</div>
+            <div className={styles.pd_price}>
+              <span className={styles.pay}>
+                {" "}
+                ₹
+                {product.discount
+                  ? parseInt((product.price * (100 - product.discount)) / 100)
+                  : product.price}
+              </span>
+              <strike>₹{product.price}</strike>
+              <span className={styles.off}> {product.discount}% off</span>
+            </div>
+
+            {/* Deilvery section */}
+            <div className={styles.sec}>
+              <div className={styles.secLeft}>Delivery</div>
+              <div className={styles.secRight}>
+                Delivery by{" "}
+                {(() => {
+                  const deliveryDate = new Date();
+                  deliveryDate.setDate(date.getDate() + product.delivery);
+                  const day = deliveryDate.getDate();
+                  const month = months[deliveryDate.getMonth()];
+                  return `${day} ${month}`;
+                })()}{" "}
+                | <span className={styles.off}>Free</span> <strike>40</strike>
+              </div>
+            </div>
+            {/* Quantuity section */}
+            <div className={styles.sec}>
+              <div className={styles.secLeft}>Quantity</div>
+              <div className={styles.secRight}>{product.quantity}</div>
+            </div>
+
+            {/* Product Specifications */}
+            <div className={styles.specs_cnt}>
+              <div className={styles.spec_heading}>Specifications</div>
+              <div className={styles.specs}>
+                {product.desc?.ram && <span>Ram: {product.desc?.ram}</span>}
+                {product.desc?.storage && (
+                  <span>Storage: {product.desc?.storage}</span>
+                )}
+                {product.desc?.camera && (
+                  <span>Camera: {product.desc?.camera}</span>
+                )}
+                {product.desc?.battery && (
+                  <span>Battery: {product.desc?.battery}</span>
+                )}
+                {product.desc?.cpu && <span>CPU: {product.desc?.cpu}</span>}
+                {product?.desc?.size && (
+                  <span>
+                    Size:{" "}
+                    {product?.desc?.size?.map((s) => s.toUpperCase() + ",")}
+                  </span>
+                )}
+              </div>
+            </div>
           </div>
         </div>
       </div>

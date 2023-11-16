@@ -6,6 +6,7 @@ import { faSquareCheck } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import logo from "../../assets/logo.png";
 import { useSelector } from "react-redux";
+import toast from "react-hot-toast";
 import styles from "./CartPage.module.css";
 
 const CartPage = () => {
@@ -54,7 +55,7 @@ const CartPage = () => {
       );
       setCartProducts(data);
     } catch (error) {
-      console.log(error);
+      toast.error(error.response.data.message);
       setCartProducts([]);
     }
   };
@@ -64,7 +65,7 @@ const CartPage = () => {
       const { data } = await axios.get("/api/products/get-recently-added");
       setRecentProducts(data);
     } catch (error) {
-      console.log(error);
+      toast.error(error.response.data.message);
     }
   };
 
@@ -74,6 +75,7 @@ const CartPage = () => {
     localStorage.setItem("cart", JSON.stringify(cartItem));
     getCartProducts(cartItem);
     setShowRemoveModal(false);
+    toast.success("item removed from cart");
   };
 
   const countPriceDetails = () => {
@@ -128,7 +130,7 @@ const CartPage = () => {
     );
 
     if (!res) {
-      alert("Razorpay SDK failed to load. Are you online?");
+      toast.error("Razorpay SDK failed to load. Are you online?");
       return;
     }
 
@@ -137,7 +139,7 @@ const CartPage = () => {
     });
 
     if (!result) {
-      alert("Server error. Are you online?");
+      toast.error("Server error. Are you online?");
       return;
     }
 
@@ -164,9 +166,8 @@ const CartPage = () => {
           products: cartProducts,
         });
 
-        alert(result.data.status);
-
         if (result.data.status === "Payment successful") {
+          toast.success("Order Placed!");
           localStorage.removeItem("cart");
           navigate("/account/orders");
         }

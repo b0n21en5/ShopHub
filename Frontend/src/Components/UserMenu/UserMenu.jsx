@@ -67,7 +67,10 @@ const UserMenu = ({ onMouseEnter, onMouseLeave }) => {
         {user && (
           <div
             className={styles.menu_item}
-            onClick={() => dispatch(removeUser())}
+            onClick={() => {
+              dispatch(removeUser());
+              onMouseLeave();
+            }}
           >
             <FontAwesomeIcon icon={faPowerOff} />
             Logout

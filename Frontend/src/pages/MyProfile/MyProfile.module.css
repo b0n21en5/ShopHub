@@ -101,3 +101,25 @@
 .d_flex {
   display: flex;
 }
+
+/* Mobile Responsiveness - 412px */
+@media screen and (max-width: 412px) {
+  .profile_cnt {
+    flex-direction: column;
+    margin: 0;
+  }
+
+  .profile_left {
+    width: 100vw;
+    height: 40vh;
+  }
+
+  .profile_left .title {
+    width: 100vw;
+  }
+
+  .profile_right {
+    width: 100vw;
+    min-height: max-content;
+  }
+}
