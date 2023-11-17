@@ -1,0 +1,65 @@
+.cnt {
+  font-size: 12px;
+  font-weight: 500;
+  color: #fff;
+  background-color: #172337;
+  margin-top: 40px;
+}
+
+.cnt .top {
+  padding: 40px 60px;
+}
+
+.top .sec {
+  display: flex;
+  flex-direction: column;
+  width: max-content;
+}
+
+.sec .heading {
+  font-size: 14px;
+  /* color: gray; */
+  margin-bottom: 10px;
+}
+
+.sec a {
+  color: #fff;
+}
+
+.sec a:hover {
+  text-decoration: underline;
+}
+
+/* Styles for footer bottom */
+.cnt .bottom {
+  padding: 25px 60px;
+  display: flex;
+  justify-content: space-between;
+  border-top: 1px solid #434242;
+}
+
+.bottom .seller {
+  color: #fff;
+  display: flex;
+  align-items: center;
+  gap: 5px;
+}
+
+.cnt svg {
+  width: 16px;
+  height: 16px;
+  color: rgb(222, 172, 25);
+}
+
+/* Mobile Responsiveness - 412px */
+@media screen and (max-width: 412px) {
+  .cnt .top {
+    padding: 10px;
+  }
+
+  .cnt .bottom {
+    padding: 10px;
+    flex-direction: column;
+    gap: 20px;
+  }
+}

@@ -21,7 +21,7 @@ const ProductCatalog = () => {
   const [sort, setSort] = useState({ by: "rating", order: "desc" });
   const [sliceVal, setSliceVal] = useState(6);
 
-  const [pricing, setPricing] = useState({ min: 100, max: 50000 });
+  const [pricing, setPricing] = useState({ min: 50, max: 150000 });
   const [brands, setBrands] = useState({
     data: [],
     isVisible: true,
@@ -260,8 +260,8 @@ const ProductCatalog = () => {
                 <Slider
                   trackStyle={{ backgroundColor: "#077bff" }}
                   range
-                  min={100}
-                  max={50000}
+                  min={50}
+                  max={150000 - 1}
                   value={[pricing.min, pricing.max]}
                   onChange={([newMin, newMax]) =>
                     setPricing({ ...pricing, min: newMin, max: newMax })
@@ -282,7 +282,7 @@ const ProductCatalog = () => {
               <Col span={4}>
                 <InputNumber
                   min={pricing.min + 1}
-                  max={50000}
+                  max={150000}
                   value={pricing.max}
                   onChange={handleMaxPrice}
                 />
@@ -527,7 +527,7 @@ const ProductCatalog = () => {
           {fetchedData.length ? (
             <div
               className={
-                path !== "Mobiles" && window.innerWidth > 412
+                path !== "Mobiles" && window.innerWidth > 450
                   ? styles.d_flex
                   : ""
               }
@@ -539,16 +539,27 @@ const ProductCatalog = () => {
                   key={item._id}
                   className={styles.pd_body}
                 >
-                  <img
-                    src={`/api/products/photo/${item._id}`}
-                    width={190}
-                    height={220}
-                    alt={item.name}
-                  />
+                  <div className={styles.img_cnt}>
+                    <img
+                      src={`/api/products/photo/${item._id}`}
+                      width="auto"
+                      height="auto"
+                      alt={item.name}
+                    />
+                  </div>
                   <div className={styles.pd_details_cnt}>
                     <div className={styles.pd_details}>
                       <div className={styles.pd_title}>
-                        <div>{item.name}</div>
+                        <div className={styles.pd_name}>
+                          {window.innerWidth > 430
+                            ? path === "Mobiles"
+                              ? item.name.substr(0, 87) +
+                                `${item.name.length > 86 ? "..." : ""}`
+                              : item.name.substr(0, 20) +
+                                `${item.name.length > 19 ? "..." : ""}`
+                            : item.name.substr(0, 87) +
+                              `${item.name.length > 86 ? "..." : ""}`}
+                        </div>
                         <div className={`${styles.btn} ${styles.btn_success}`}>
                           {item.rating}
                           <FontAwesomeIcon
@@ -570,7 +581,7 @@ const ProductCatalog = () => {
                       {path === "Fashion" && (
                         <div>
                           Size:{" "}
-                          {item?.desc?.size?.map((i) => i.toUpperCase() + ",")}
+                          {item?.desc?.size?.map((i) => i.toUpperCase() + ", ")}
                         </div>
                       )}
                     </div>

@@ -1,6 +1,10 @@
+.home {
+  min-height: 90vh;
+}
+
 .cat_cnt {
   display: flex;
-  margin: 10px 15px;
+  margin: 20px 15px;
   background-color: #fff;
   height: 122px;
 }

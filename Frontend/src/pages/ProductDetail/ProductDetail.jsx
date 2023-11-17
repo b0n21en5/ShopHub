@@ -1,6 +1,6 @@
 import axios from "axios";
 import React, { useEffect, useState } from "react";
-import { useLocation, useNavigate, useParams } from "react-router-dom";
+import { Link, useLocation, useNavigate, useParams } from "react-router-dom";
 import {
   faBoltLightning,
   faCartShopping,
@@ -16,6 +16,7 @@ const ProductDetail = () => {
   const [similarProducts, setSimilarProducts] = useState([]);
 
   const { pid } = useParams();
+  const path = useLocation().pathname.split("/")[1];
 
   const navigate = useNavigate();
 
@@ -38,10 +39,10 @@ const ProductDetail = () => {
 
   const fetchProductDetail = async () => {
     try {
-      const { data } = await axios.get(`/api/products/get-product/${pid}`);
-      if (data.desc) {
+      const { data } = await axios.get(`/api/products/get-single/${pid}`);
+      try {
         data.desc = JSON.parse(data.desc);
-      }
+      } catch (e) {}
       setProduct(data);
     } catch (error) {
       toast.error(error.response.data.message);
@@ -167,12 +168,12 @@ const ProductDetail = () => {
       <div className={styles.details_cnt}>
         <div className={styles.details}>
           <div className={styles.detail_left}>
-            <img
-              src={product._id ? `/api/products/photo/${product?._id}` : ""}
-              alt={product?.name}
-              width={400}
-              height={370}
-            />
+            <div className={styles.img_cnt}>
+              <img
+                src={product._id ? `/api/products/photo/${product?._id}` : ""}
+                alt={product?.name}
+              />
+            </div>
             <div className={styles.cta_btn_cnt}>
               <button
                 onClick={addTocart}
@@ -236,19 +237,62 @@ const ProductDetail = () => {
               <div className={styles.specs}>
                 {product.desc?.ram && <span>Ram: {product.desc?.ram}</span>}
                 {product.desc?.storage && (
-                  <span>Storage: {product.desc?.storage}</span>
+                  <span className={styles.grey}>
+                    Storage: {product.desc?.storage}
+                  </span>
                 )}
                 {product.desc?.camera && (
-                  <span>Camera: {product.desc?.camera}</span>
+                  <span className={styles.grey}>
+                    Camera: {product.desc?.camera}
+                  </span>
                 )}
                 {product.desc?.battery && (
-                  <span>Battery: {product.desc?.battery}</span>
+                  <span className={styles.grey}>
+                    Battery: {product.desc?.battery}
+                  </span>
                 )}
-                {product.desc?.cpu && <span>CPU: {product.desc?.cpu}</span>}
+                {product.desc?.cpu && (
+                  <span className={styles.grey}>CPU: {product.desc?.cpu}</span>
+                )}
+                {product.desc?.quantity && (
+                  <span className={styles.grey}>
+                    Net Quantity: {product.desc?.quantity}
+                  </span>
+                )}
+                {product.desc?.weight && (
+                  <span className={styles.grey}>
+                    Weight: {product.desc?.weight}
+                  </span>
+                )}
+                {product.desc?.type && (
+                  <span className={styles.grey}>
+                    Type: {product.desc?.type}
+                  </span>
+                )}
+                {product.desc?.flavor && (
+                  <span className={styles.grey}>
+                    Flavor: {product.desc?.flavor}
+                  </span>
+                )}
+                {product.desc?.preferrance && (
+                  <span className={styles.grey}>
+                    Preferrance: {product.desc?.preferrance}
+                  </span>
+                )}
+                {product.desc?.pack && (
+                  <span className={styles.grey}>
+                    Pack: {product.desc?.pack}
+                  </span>
+                )}
+                {product.desc?.warranty && (
+                  <span className={styles.grey}>
+                    Warranty: {product.desc?.warranty}
+                  </span>
+                )}
                 {product?.desc?.size && (
-                  <span>
+                  <span className={styles.grey}>
                     Size:{" "}
-                    {product?.desc?.size?.map((s) => s.toUpperCase() + ",")}
+                    {product?.desc?.size?.map((s) => s.toUpperCase() + ", ")}
                   </span>
                 )}
               </div>
@@ -262,16 +306,23 @@ const ProductDetail = () => {
         <div className={styles.heading}>Similar Products</div>
         <div className={styles.similar_products_cnt}>
           {similarProducts.map((prodt) => (
-            <div className={styles.similar_product} key={prodt._id}>
+            <Link
+              to={`/${path}/${prodt._id}`}
+              target="_blank"
+              className={styles.similar_product}
+              key={prodt._id}
+            >
               <div className={styles.img_cnt}>
                 <img
                   src={`/api/products/photo/${prodt._id}`}
                   alt={prodt.name}
-                  width={140}
-                  height={180}
                 />
               </div>
-              <div>{prodt.name}</div>
+              <div>
+                {prodt.name.length > 61
+                  ? prodt.name.substr(0, 62) + "..."
+                  : prodt.name}
+              </div>
               <div className={styles.review}>
                 <div className={styles.rating}>
                   {prodt.rating}
@@ -285,7 +336,7 @@ const ProductDetail = () => {
                 <strike className={styles.price}>{prodt.price}</strike>
                 <span className={styles.off}>{prodt.discount}% off</span>
               </div>
-            </div>
+            </Link>
           ))}
         </div>
       </div>

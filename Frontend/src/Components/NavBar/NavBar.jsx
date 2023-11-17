@@ -94,13 +94,13 @@ const NavBar = () => {
               icon={faBars}
               onClick={() => setIsVisible({ ...isVisible, menu: true })}
             />
-            <Link to="/" sty>
+            <Link to="/">
               <img height="28" width="100" src={logo} alt="logo" />
             </Link>
           </div>
 
           <div className={styles.mb_nav_right}>
-            <Link to="/cart" className={styles.mb_cart_box}>
+            <Link to="/cart" className={styles.mb_cart_box} aria-label="cart-page-link">
               <div>
                 {cartCount ? (
                   <span className={styles.mb_cart_count}>{cartCount}</span>
@@ -196,7 +196,7 @@ const NavBar = () => {
 
         {/* Cart button */}
         {path !== "cart" && (
-          <Link to="/cart" className={styles.cart_box}>
+          <Link to="/cart" className={styles.cart_box} aria-label="cart-page-link">
             <div>
               {cartCount ? (
                 <span className={styles.cart_count}>{cartCount}</span>
@@ -214,7 +214,7 @@ const NavBar = () => {
       {categories.length !== 0 ? (
         <div className={styles.category_cnt}>
           {categories.map((cat) => (
-            <Link to={`/${cat.slug}`} key={cat._id}>
+            <Link to={`/${cat.slug}`} key={cat._id} aria-label={`${cat.name} category link`}>
               {cat.name}
             </Link>
           ))}
