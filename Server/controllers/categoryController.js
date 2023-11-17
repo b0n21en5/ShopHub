@@ -35,26 +35,39 @@ export const addNewCategory = async (req, res) => {
 
 export const getAllCategory = async (req, res) => {
   try {
-    const category = await categoryModel.find().select("-photo");
+    const category = await categoryModel.find().select("-photo").sort({createdAt:-1});
     return res.status(200).send(category);
   } catch (error) {
     return serverError(res, error, "Error while fetching categories");
   }
 };
 
+export const getSingleCategory = async (req, res) => {
+  try {
+    const category = await categoryModel
+      .findById(req.params.cid)
+      .select("-photo");
+    if (!category) {
+      return NotFound(res, "No Category Found!");
+    }
+
+    return res.status(200).send(category);
+  } catch (error) {
+    return serverError(res, error, "Error Fetching Single Category!");
+  }
+};
+
 export const updateCategory = async (req, res) => {
   try {
-    const { subcategories } = req.fields;
+    const { name, subcategories } = req.fields;
     const { photo } = req.files;
 
     if (photo && photo.size > 1000000)
-      return NotFound(res, "Photo is Required and should be less than 1mb");
+      return NotFound(res, "Photo size should be less than 1mb!");
 
     const category = await categoryModel.findByIdAndUpdate(
       req.params.cid,
-      {
-        subcategories,
-      },
+      { name, slug: slugify(name), subcategories },
       { new: true }
     );
 

@@ -10,6 +10,7 @@ const OrderSchema = new mongoose.Schema(
     ],
     buyer: {
       type: mongoose.ObjectId,
+      ref:"Users",
       required: true,
     },
     payment: {},

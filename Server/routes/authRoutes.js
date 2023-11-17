@@ -4,10 +4,14 @@ import {
   getAllOrders,
   getSingleUserOrdersWithFilters,
   registerController,
+  updateOrderStatus,
   updateUserCredentials,
   userLoginController,
 } from "../controllers/authController.js";
-import { verifyAuthentication } from "../helpers/verifyAuthentication.js";
+import {
+  verifyAuthentication,
+  verifyAuthorization,
+} from "../helpers/verifyAuthentication.js";
 
 const router = express.Router();
 
@@ -23,5 +27,8 @@ router.get(
   verifyAuthentication,
   getSingleUserOrdersWithFilters
 );
+
+// update order status
+router.put("/update-order/:orderId", verifyAuthorization, updateOrderStatus);
 
 export default router;
