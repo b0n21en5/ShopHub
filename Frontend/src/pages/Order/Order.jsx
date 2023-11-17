@@ -266,12 +266,14 @@ const Order = () => {
               {orders?.map((item) => {
                 return item?.products?.map((ord) => (
                   <div className={styles.all_orders} key={ord._id}>
-                    <img
-                      src={`/api/products/photo/${ord._id}`}
-                      alt={ord.name}
-                      width={80}
-                      height={60}
-                    />
+                    <div className={styles.img_cnt}>
+                      <img
+                        src={`/api/products/photo/${ord._id}`}
+                        alt={ord.name}
+                        width="auto"
+                        height="auto"
+                      />
+                    </div>
                     <div className={styles.product_details}>
                       <div className={styles.product}>
                         {ord.name.length > 20

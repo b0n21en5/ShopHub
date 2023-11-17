@@ -20,9 +20,21 @@
   height: 540px;
 }
 
-.details .detail_left img {
-  padding: 20px;
+.details .detail_left .img_cnt {
+  height: 370px;
   border: 0.5px solid rgba(174, 172, 172, 0.2);
+  padding: 20px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.details .detail_left .img_cnt img {
+  width: auto;
+  max-width: 100%;
+  height: auto;
+  max-height: 100%;
+  object-fit: contain;
 }
 
 .details .detail_left .cta_btn_cnt {
@@ -124,7 +136,7 @@
 
 /* Styles for Similar Prodcts */
 .similar_products_section {
-  height: 424px;
+  min-height: 424px;
   margin: 20px 0;
   padding-top: 24px;
   background-color: white;
@@ -141,6 +153,9 @@
 }
 
 .similar_products_cnt .similar_product {
+  width: 220px;
+  max-width: 228px;
+  height: 326px;
   padding: 1rem;
   display: flex;
   flex-direction: column;
@@ -149,6 +164,17 @@
 
 .similar_products_cnt .similar_product .img_cnt {
   padding: 0 28px 16px;
+  width: 100%;
+  height: 180px;
+  display: flex;
+}
+
+.similar_products_cnt .similar_product .img_cnt img {
+  width: auto;
+  max-width: 100%;
+  height: auto;
+  max-height: 100%;
+  object-fit: contain;
 }
 
 .similar_products_cnt .similar_product .review {
@@ -188,10 +214,15 @@
   margin-left: 10px;
 }
 
+/* Utills */
+.grey {
+  /* color: grey; */
+}
+
 /* Mobile Responsiveness - 412px */
 @media screen and (max-width: 412px) {
   .details_cnt {
-    width: 100vw;
+    width: 100%;
     margin: 0;
     height: max-content;
   }
@@ -206,11 +237,6 @@
     align-items: center;
   }
 
-  .details .detail_left img {
-    width: 404px;
-    height: 486px;
-  }
-
   .details .detail_left .cta_btn_cnt {
     position: fixed;
     bottom: 0;
@@ -220,6 +246,7 @@
 
   .details .detail_right {
     padding: 1rem;
+    width: 90%;
   }
 
   .similar_products_section {
@@ -233,16 +260,8 @@
   }
 
   .similar_products_cnt .similar_product {
+    max-width: 180px;
     padding: 1rem 0.7rem;
     border: 0.5px solid rgba(240, 236, 236, 0.582);
-  }
-
-  .similar_products_cnt .similar_product .img_cnt {
-    padding: 0;
-  }
-
-  .similar_products_cnt .similar_product .img_cnt img {
-    width: 180px;
-    height: 228px;
   }
 }

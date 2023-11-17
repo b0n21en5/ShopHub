@@ -35,21 +35,21 @@ const ProductList = ({ category }) => {
       {products.length ? (
         <div className={styles.prdt_cnt}>
           {products.map((prdt) => (
-            <Link to={`/${category.slug}/${prdt._id}`} key={prdt._id}>
-              <div className={styles.prdt}>
-                <div className={styles.prdt_img_cnt}>
-                  <img
-                    width="150"
-                    height="190"
-                    src={`/api/products/photo/${prdt._id}`}
-                    alt={prdt.name}
-                  />
-                </div>
-                <div className={styles.prdt_name} key={prdt._id}>
-                  {prdt.name.length > 16
-                    ? prdt.name.substr(0, 15) + "..."
-                    : prdt.name}
-                </div>
+            <Link
+              to={`/${category.slug}/${prdt._id}`}
+              key={prdt._id}
+              className={styles.prdt}
+            >
+              <div className={styles.prdt_img_cnt}>
+                <img
+                  src={`/api/products/photo/${prdt._id}`}
+                  alt={`${prdt.name}-image`}
+                />
+              </div>
+              <div className={styles.prdt_name} key={prdt._id}>
+                {prdt.name.length > 16
+                  ? prdt.name.substr(0, 15) + "..."
+                  : prdt.name}
               </div>
             </Link>
           ))}

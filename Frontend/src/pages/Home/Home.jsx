@@ -30,7 +30,7 @@ const Home = () => {
   }, []);
 
   return (
-    <div>
+    <div className={styles.home}>
       <div className={styles.cat_cnt}>
         {categories?.map((c) => (
           <Link to={`/${c.slug}`} key={c._id}>
@@ -40,7 +40,7 @@ const Home = () => {
                   width="64"
                   height="64"
                   src={`/api/category/photo/${c._id}`}
-                  alt={c.name}
+                  alt={`${c.name}-image`}
                 />
               </div>
               <div
