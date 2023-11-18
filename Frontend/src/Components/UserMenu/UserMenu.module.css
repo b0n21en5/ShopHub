@@ -50,9 +50,9 @@
   color: #2874f0;
 }
 
-/* Mobile Responsiveness - 412px */
+/* Mobile Responsiveness - 420px */
 
-@media screen and (max-width: 412px) {
+@media screen and (max-width: 420px) {
   .user_menu_overlay {
     background-color: rgba(0, 0, 0, 0.596);
     z-index: 9999999999;

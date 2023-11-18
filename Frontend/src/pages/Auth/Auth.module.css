@@ -2,9 +2,9 @@
   display: flex;
   align-items: center;
   justify-content: center;
-  height: 90vh;
-  padding-top: 15px;
-  margin-bottom: 30px;
+  height: 100vh;
+  margin-top: 50px;
+  margin-bottom: 50px;
 }
 
 /* Styles for Auth page Left side */
@@ -97,8 +97,8 @@
   box-shadow: rgba(0, 0, 0, 0.2) 0px 2px 4px 0px;
 }
 
-/* Mobile Responsiveness - 412px */
-@media screen and (max-width: 412px) {
+/* Mobile Responsiveness - 420px */
+@media screen and (max-width: 420px) {
   .auth_cnt{
     height: 80vh;
   }

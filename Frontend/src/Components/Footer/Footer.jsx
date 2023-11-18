@@ -19,7 +19,7 @@ const Footer = () => {
       </div>
 
       <div className={styles.bottom}>
-        {window.innerWidth > 412 && (
+        {window.innerWidth > 420 && (
           <Link to="/admin" className={styles.seller}>
             <FontAwesomeIcon icon={faStore} />
             <span>Become a seller</span>

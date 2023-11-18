@@ -452,14 +452,14 @@ const ProductCatalog = () => {
         <div className={styles.mb_filters_cnt}>
           <div
             className={styles.mb_sorting}
-            onClick={() => setMbVisible((p) => ({ ...p, sort: !p.sort }))}
+            onClick={() => setMbVisible((p) => ({ filter:false, sort: !p.sort }))}
           >
             <FontAwesomeIcon icon={faArrowDownWideShort} />
             Sort
           </div>
           <div
             className={styles.mb_filters}
-            onClick={() => setMbVisible((p) => ({ ...p, filter: !p.filter }))}
+            onClick={() => setMbVisible((p) => ({ sort:false, filter: !p.filter }))}
           >
             <FontAwesomeIcon icon={faFilter} />
             Filter

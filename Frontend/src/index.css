@@ -48,8 +48,8 @@ a:hover {
   color: black;
 }
 
-/* Mobile Responsiveness - 412px */
-@media screen and (max-width: 412px) {
+/* Mobile Responsiveness - 420px */
+@media screen and (max-width: 420px) {
   body {
     background-color: white;
     scrollbar-width: none;
