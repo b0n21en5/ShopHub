@@ -220,8 +220,8 @@
   color: rgb(244, 206, 69);
 }
 
-/* Mobile Responsiveness - 412px */
-@media screen and (max-width: 412px) {
+/* Mobile Responsiveness - 420px */
+@media screen and (max-width: 420px) {
   .links {
     display: none;
   }
@@ -293,6 +293,10 @@
     border-bottom: 0.5px solid rgba(153, 151, 151, 0.776);
   }
 
+  .all_orders .img_cnt {
+    padding: 0;
+  }
+
   .order_cnt .order_right .all_orders img {
     width: 72px;
     height: 68px;
@@ -301,6 +305,10 @@
 
   .order_right .all_orders .product_details {
     flex-direction: column;
+  }
+
+  .order_right .all_orders .product_details .product {
+    width: 280px;
   }
 
   /* Utills */

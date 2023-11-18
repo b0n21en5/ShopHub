@@ -225,9 +225,9 @@
   flex-direction: column;
 }
 
-/* Mobile responsiveness - 412px */
+/* Mobile responsiveness - 420px */
 
-@media screen and (max-width: 412px) {
+@media screen and (max-width: 420px) {
   .mb_row {
     display: block;
     margin: 0;
@@ -287,9 +287,10 @@
     flex-direction: column;
     font-weight: 500;
     padding: 10px;
-    position: absolute;
+    margin: 0;
+    position: fixed;
     bottom: 0;
-    width: 200px;
+    width: 100%;
     background-color: #fff;
   }
 
@@ -349,5 +350,9 @@
   /* Utills */
   .d_non {
     display: none !important;
+  }
+
+  .sort_active{
+    width: max-content;
   }
 }

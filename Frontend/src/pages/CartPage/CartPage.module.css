@@ -204,8 +204,8 @@
   justify-content: space-between;
 }
 
-/* Mobile Responsiveness - 412px */
-@media screen and (max-width: 412px) {
+/* Mobile Responsiveness - 420px */
+@media screen and (max-width: 420px) {
   .cart_cnt {
     margin: 0;
     flex-direction: column;

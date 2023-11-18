@@ -19,7 +19,7 @@
 }
 
 /* Mobile Responsiveness - 412px */
-@media screen and (max-width: 412px) {
+@media screen and (max-width: 420px) {
   .no_results img {
     width: 240px;
     height: 150px;

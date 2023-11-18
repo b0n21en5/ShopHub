@@ -6,6 +6,7 @@ import { faEye } from "@fortawesome/free-solid-svg-icons";
 import { useDispatch } from "react-redux";
 import { setUser } from "../../store/userSlice";
 import toast from "react-hot-toast";
+import authImg from "../../assets/auth.png"
 import styles from "./Auth.module.css";
 
 const Auth = () => {
@@ -97,7 +98,7 @@ const Auth = () => {
               : "Sign up with your mobile number to get started"}
           </div>
         </div>
-        <img width={220} height={130} src="./src/assets/auth.png" alt="auth" />
+        <img width={220} height={130} src={authImg} alt="auth" />
       </div>
       <form
         className={styles.auth_right}

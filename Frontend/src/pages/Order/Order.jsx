@@ -100,7 +100,7 @@ const Order = () => {
 
   useEffect(() => {
     if (!filter.search) getAllOrders();
-    else if (window.innerWidth <= 412) getAllOrders();
+    else if (window.innerWidth <= 420) getAllOrders();
   }, [filter]);
 
   // Function to remove applied filter

@@ -102,8 +102,8 @@
   display: flex;
 }
 
-/* Mobile Responsiveness - 412px */
-@media screen and (max-width: 412px) {
+/* Mobile Responsiveness - 420px */
+@media screen and (max-width: 420px) {
   .profile_cnt {
     flex-direction: column;
     margin: 0;

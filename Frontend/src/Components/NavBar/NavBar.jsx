@@ -22,36 +22,12 @@ const NavBar = () => {
   const [searchTerm, setSearchTerm] = useState("");
   const [cartCount, setCartCount] = useState(0);
   const [isVisible, setIsVisible] = useState({ search: false, menu: false });
-  const [scrollPos, setScrollPos] = useState(0);
-  const [scrollDirection, setScrollDirection] = useState("scroll-up");
 
   const { user } = useSelector((state) => state.user);
 
   const path = useLocation().pathname.substring(1);
 
   const navigate = useNavigate();
-
-  const handleScroll = () => {
-    const currentScrollPos = window.pageYOffset;
-
-    if (currentScrollPos > 0 && currentScrollPos > scrollPos) {
-      setScrollDirection("scroll-down");
-    } else {
-      setScrollDirection("scroll-up");
-    }
-
-    setScrollPos(currentScrollPos);
-  };
-
-  useEffect(() => {
-    if (window.innerWidth <= 412) {
-      window.addEventListener("scroll", handleScroll);
-    }
-
-    return () => {
-      window.removeEventListener("scroll", handleScroll);
-    };
-  }, [scrollPos]);
 
   const getAllCategories = async () => {
     try {
@@ -80,11 +56,7 @@ const NavBar = () => {
   return !path.startsWith("admin") ? (
     <>
       <div
-        className={`${styles.navbar} ${path !== "" ? styles.dodg_blue : ""} ${
-          scrollDirection === "scroll-down"
-            ? styles.navbar_hidden
-            : styles.navbar_visible
-        }`}
+        className={`${styles.navbar} ${path !== "" ? styles.dodg_blue : ""}`}
         onMouseEnter={() => setIsVisible({ ...isVisible, menu: false })}
       >
         {/* Nav Menu for Mobile  */}
@@ -100,7 +72,11 @@ const NavBar = () => {
           </div>
 
           <div className={styles.mb_nav_right}>
-            <Link to="/cart" className={styles.mb_cart_box} aria-label="cart-page-link">
+            <Link
+              to="/cart"
+              className={styles.mb_cart_box}
+              aria-label="cart-page-link"
+            >
               <div>
                 {cartCount ? (
                   <span className={styles.mb_cart_count}>{cartCount}</span>
@@ -196,7 +172,11 @@ const NavBar = () => {
 
         {/* Cart button */}
         {path !== "cart" && (
-          <Link to="/cart" className={styles.cart_box} aria-label="cart-page-link">
+          <Link
+            to="/cart"
+            className={styles.cart_box}
+            aria-label="cart-page-link"
+          >
             <div>
               {cartCount ? (
                 <span className={styles.cart_count}>{cartCount}</span>
@@ -214,7 +194,11 @@ const NavBar = () => {
       {categories.length !== 0 ? (
         <div className={styles.category_cnt}>
           {categories.map((cat) => (
-            <Link to={`/${cat.slug}`} key={cat._id} aria-label={`${cat.name} category link`}>
+            <Link
+              to={`/${cat.slug}`}
+              key={cat._id}
+              aria-label={`${cat.name} category link`}
+            >
               {cat.name}
             </Link>
           ))}
