@@ -5,6 +5,7 @@ import axios from "axios";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import {
   faAngleRight,
+  faCircle,
   faFilter,
   faMagnifyingGlass,
   faXmark,
@@ -12,6 +13,7 @@ import {
 import { Checkbox } from "antd";
 import toast from "react-hot-toast";
 import styles from "./Order.module.css";
+import moment from "moment";
 
 const Order = () => {
   const [orders, setOrders] = useState([]);
@@ -284,11 +286,15 @@ const Order = () => {
                         ₹{parseInt((ord.price * (100 - ord.discount)) / 100)}
                       </div>
                       <div>
-                        <div className={styles.date}>{`${item.status} on ${
-                          months[new Date(item.updatedAt).getMonth()]
-                        } ${new Date(item.updatedAt).getDate()}, ${new Date(
-                          item.updatedAt
-                        ).getFullYear()}`}</div>
+                        <div className={`${styles.date} `}>
+                          <FontAwesomeIcon
+                            icon={faCircle}
+                            className={styles[item?.status]}
+                          />
+                          {` ${item.status} on ${moment(item.updatedAt).format(
+                            "DD MMM YYYY"
+                          )}`}
+                        </div>
                         {item.status === "Delivered" ? (
                           <div style={{ fontSize: "12px" }}>
                             Your item has been delivered

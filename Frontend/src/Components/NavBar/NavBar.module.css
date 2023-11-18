@@ -114,7 +114,8 @@
   padding: 0 100px;
   background-color: white;
   border-radius: 0;
-  box-shadow: rgba(0, 0, 0, 0.16) 0px 1px 1px 0px;
+  box-shadow: rgba(0, 0, 0, 0.16) 0px 1px 1px 0px,
+    rgba(0, 0, 0, 0.3) 0px 2px 2px 0px;
 }
 
 /* Navbar css for other pages except home */

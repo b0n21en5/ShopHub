@@ -107,6 +107,7 @@
 
 .order_right .search_bar {
   display: flex;
+  align-items: center;
 }
 
 .order_right .search_bar:hover {
@@ -140,7 +141,7 @@
   color: white;
   font-size: 13px;
   font-weight: 500;
-  padding: 10px 20px;
+  padding: 8px 20px;
   width: 146px;
   height: 40px;
   cursor: pointer;
@@ -202,6 +203,21 @@
 
 .order_right .all_orders .date {
   font-weight: 600;
+}
+
+.date svg {
+  font-size: 10px;
+}
+
+/* Utills */
+.Delivered {
+  color: #26a541;
+}
+.Cancelled {
+  color: #ff6161 !important;
+}
+.Returned {
+  color: rgb(244, 206, 69);
 }
 
 /* Mobile Responsiveness - 412px */

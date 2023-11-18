@@ -21,7 +21,7 @@ const ProductCatalog = () => {
   const [sort, setSort] = useState({ by: "rating", order: "desc" });
   const [sliceVal, setSliceVal] = useState(6);
 
-  const [pricing, setPricing] = useState({ min: 50, max: 150000 });
+  const [pricing, setPricing] = useState({ min: 50, max: 70000 });
   const [brands, setBrands] = useState({
     data: [],
     isVisible: true,
@@ -261,7 +261,7 @@ const ProductCatalog = () => {
                   trackStyle={{ backgroundColor: "#077bff" }}
                   range
                   min={50}
-                  max={150000 - 1}
+                  max={70000 - 1}
                   value={[pricing.min, pricing.max]}
                   onChange={([newMin, newMax]) =>
                     setPricing({ ...pricing, min: newMin, max: newMax })
@@ -282,7 +282,7 @@ const ProductCatalog = () => {
               <Col span={4}>
                 <InputNumber
                   min={pricing.min + 1}
-                  max={150000}
+                  max={70000}
                   value={pricing.max}
                   onChange={handleMaxPrice}
                 />

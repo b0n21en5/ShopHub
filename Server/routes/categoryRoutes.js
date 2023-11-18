@@ -4,29 +4,37 @@ import {
   deleteCategory,
   getAllCategory,
   getCategoryPhoto,
+  getSingleCategory,
   updateCategory,
 } from "../controllers/categoryController.js";
 import formidableMiddleware from "express-formidable";
-import { verifyAuthentication } from "../helpers/verifyAuthentication.js";
+import {
+  verifyAuthentication,
+  verifyAuthorization,
+} from "../helpers/verifyAuthentication.js";
 
 const router = express.Router();
 
 router.post(
   "/add-new",
-  verifyAuthentication,
+  verifyAuthorization,
   formidableMiddleware(),
   addNewCategory
 );
+
+router.get("/get-single/:cid", getSingleCategory);
 router.get("/get-all", getAllCategory);
 router.get("/photo/:cid", getCategoryPhoto);
 
+// Update Category
 router.put(
   "/update/:cid",
-  verifyAuthentication,
+  verifyAuthorization,
   formidableMiddleware(),
   updateCategory
 );
 
-router.delete("/delete/:cid", verifyAuthentication, deleteCategory);
+// Delete Category
+router.delete("/delete/:cid", verifyAuthorization, deleteCategory);
 
 export default router;

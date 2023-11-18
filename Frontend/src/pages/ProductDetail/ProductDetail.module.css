@@ -45,6 +45,7 @@
 }
 
 .details .detail_left .cta_btn_cnt .btn {
+  color: #fff;
   font-weight: 500;
   width: 195px;
   height: 55px;
@@ -52,6 +53,7 @@
   border: none;
   border-radius: 2px;
   box-shadow: rgba(0, 0, 0, 0.2) 0px 1px 2px 0px;
+  cursor: pointer;
 
   display: flex;
   justify-content: center;

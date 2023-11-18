@@ -42,7 +42,7 @@ const SearchModal = ({ setIsVisible, searchTerm }) => {
       onClick={() => setIsVisible((prev) => ({ ...prev, search: false }))}
     >
       <div className={styles.search_modal} onClick={(e) => e.stopPropagation()}>
-        <h6>Discover more</h6>
+        <h5>Discover more</h5>
         <div className={styles.result}>
           {searchData?.map((item) => (
             <Link
@@ -54,15 +54,16 @@ const SearchModal = ({ setIsVisible, searchTerm }) => {
             >
               {item?.photo?.data ? (
                 <img
-                  width={20}
-                  height={30}
+                  width={40}
+                  height={40}
                   src={`/api/products/photo/${item._id}`}
                   alt={item.name}
                 />
               ) : (
                 <FontAwesomeIcon icon={faMagnifyingGlass} />
               )}
-              {item.name.toLowerCase()}
+              {item.name.substr(0, 52).toLowerCase() +
+                `${item.name.length > 52 ? "..." : ""}`}
             </Link>
           ))}
         </div>
