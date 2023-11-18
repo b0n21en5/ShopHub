@@ -1,0 +1,75 @@
+.main {
+  display: flex;
+  justify-content: center;
+ min-height: 130vh;
+}
+
+.cnt {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 20px;
+  padding-top: 20px;
+  margin-top: 20px;
+  height: 100vh;
+}
+
+.bg_white {
+  width: max-content;
+  background-color: #fff;
+}
+
+.post_form {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  width: 40vw;
+  padding: 1rem 2rem;
+  /* margin-top: 20px; */
+  background-color: #fff;
+}
+
+input {
+  color: black;
+  background-color: white;
+  width: 100%;
+  padding-bottom: 5px;
+  border: none;
+  border-bottom: 0.5px solid rgba(215, 211, 211, 0.708);
+}
+
+.post_form input:focus {
+  outline: none;
+  border-bottom: 1.5px solid #2874f0;
+}
+
+.post_form select {
+  color: #000;
+  background-color: #fff;
+}
+
+.post_form .btn_cnt{
+  display: flex;
+}
+
+.btn_cnt .btn {
+  font-weight: 500;
+  text-align: center;
+  color: white;
+  padding: 10px 20px;
+  margin-top: 20px;
+  border: none;
+  border-radius: 2px;
+  box-shadow: rgba(0, 0, 0, 0.2) 0px 1px 2px 0px;
+  cursor: pointer;
+  width: 100%;
+}
+
+.btn_cnt .submit_btn{
+  background-color: #2874f0;
+}
+
+.btn_cnt .delete_btn{
+  background-color: #fb641b;
+
+}
