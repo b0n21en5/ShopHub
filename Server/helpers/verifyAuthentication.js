@@ -1,17 +1,13 @@
 import jwt from "jsonwebtoken";
 import { NotFound } from "./handleError.js";
+import userModel from "../models/userModel.js";
 
-export const verifyAuthentication =async (req, res, next) => {
-  const token = req.cookies.user_token;
-
-  if (!token) {
-    return NotFound(res, "Unauthenticated!");
-  }
-
+export const verifyAuthentication = async (req, res, next) => {
   try {
-    const decoded =await jwt.verify(token, process.env.JWT_KEY);
+    const token = req.cookies.user_token;
+    const decoded = await jwt.verify(token, process.env.JWT_KEY);
 
-    req.user = decoded;
+    if (!decoded) throw error();
 
     next();
   } catch (error) {
@@ -22,15 +18,13 @@ export const verifyAuthentication =async (req, res, next) => {
 export const verifyAuthorization = async (req, res, next) => {
   try {
     const token = req.cookies.admin_token;
-    const decoded =await jwt.verify(token, process.env.JWT_KEY);
+    const decoded = await jwt.verify(token, process.env.JWT_KEY);
 
-    const user = await userModel.findById(req.user._id);
-
-    req.user = decoded;
+    const user = await userModel.findById(decoded._id);
 
     if (!user.role) throw error();
     next();
   } catch (error) {
-    return NotFound(res, "Unauthorized!");
+    return NotFound(res, "Unauthorized Access!");
   }
 };

@@ -207,22 +207,36 @@ export const getAllOrders = async (req, res) => {
     let allOrders = await orderModel
       .find({})
       .populate("products", "-photo")
+      .populate("buyer", "username")
       .sort({ createdAt: "-1" });
 
     if (!allOrders) {
       return NotFound(res, "No Orders Found!");
     }
 
-    let orders = [];
-
-    allOrders.forEach((item) =>
-      item.products.forEach((prodt) => {
-        orders.push(prodt);
-      })
-    );
-
-    return res.status(200).send(orders);
+    return res.status(200).send(allOrders);
   } catch (error) {
     return serverError(res, error, "Error While Fetching All Orders!");
+  }
+};
+
+export const updateOrderStatus = async (req, res) => {
+  try {
+    const { status } = req.body;
+    const order = await orderModel.findByIdAndUpdate(
+      req.params.orderId,
+      { status },
+      { new: true }
+    );
+
+    if (!order) {
+      return NotFound(res, "No Order with this ID!");
+    }
+
+    return res
+      .status(200)
+      .send({ message: "Successfully Updated Order Status", order });
+  } catch (error) {
+    return serverError(res, error, "Error Updating Order Status!");
   }
 };

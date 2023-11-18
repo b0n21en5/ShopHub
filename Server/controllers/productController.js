@@ -35,8 +35,8 @@ export const addNewProduct = async (req, res) => {
     switch (true) {
       case !name:
         return NotFound(res, "Name required!");
-      case !desc:
-        return NotFound(res, "Description required!");
+      // case !desc:
+      //   return NotFound(res, "Description required!");
       case !quantity:
         return NotFound(res, "Quantity required!");
       case !price:
@@ -76,7 +76,7 @@ export const addNewProduct = async (req, res) => {
 
 export const getAllProducts = async (req, res) => {
   try {
-    const products = await productModel.find().select("-photo");
+    const products = await productModel.find({}).select("-photo").sort({createdAt:-1});
 
     return res.status(200).send(products);
   } catch (error) {
@@ -104,42 +104,11 @@ export const getSingleProduct = async (req, res) => {
 
 export const updateProduct = async (req, res) => {
   try {
-    const {
-      name,
-      desc,
-      quantity,
-      price,
-      category,
-      subcategory,
-      delivery,
-      rating,
-      discount,
-      brand,
-    } = req.fields;
+    const { name, subcategory } = req.fields;
     const { photo } = req.files;
 
-    // validation for required fields
-    switch (true) {
-      case !name:
-        return NotFound(res, "Name required!");
-      case !desc:
-        return NotFound(res, "Description required!");
-      case !quantity:
-        return NotFound(res, "Quantity required!");
-      case !price:
-        return NotFound(res, "Price required!");
-      case !category:
-        return NotFound(res, "Category required!");
-      case !delivery:
-        return NotFound(res, "Delivery required!");
-      case !discount:
-        return NotFound(res, "Discount required!");
-      case !rating:
-        return NotFound(res, "Rating required!");
-      case !brand:
-        return NotFound(res, "Brand required!");
-      case photo && photo.size > 1000000:
-        return NotFound(res, "Photo required && size should be less than 1mb!");
+    if (photo && photo.size > 1000000) {
+      return NotFound(res, "Photo size should be less than 1mb!");
     }
 
     const product = await productModel.findByIdAndUpdate(
@@ -282,7 +251,7 @@ export const filterProducts = async (req, res) => {
     sortArg[sortBy] = order;
 
     const skip = (currPage - 1) * pageLimit || 0;
-    const limit = pageLimit || 6;
+    const limit = pageLimit || 8;
 
     let filterArgs = {};
     if (cid) filterArgs.category = cid;
@@ -424,7 +393,6 @@ export const handleSuccessfulPayment = async (req, res) => {
 export const getSimilarProducts = async (req, res) => {
   try {
     const { catid, pid } = req.params;
-    console.log(catid);
 
     const similarProducts = await productModel
       .find({
