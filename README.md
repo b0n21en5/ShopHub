@@ -1,7 +1,12 @@
 
-
 # Shophub - MERN Stack E-Commerce Web App
 Welcome to Shophub, a full-fledged MERN stack e-commerce web application designed to provide a seamless shopping experience. This project combines the power of React, Node, Express, and MongoDB to create a feature-rich platform for both users and administrators.
+
+<hr/><br>
+
+[Live Site](https://shophub-hy4k.onrender.com)
+
+<br>
 
 ![](https://github.com/b0n21en5/ShopHub/blob/main/Frontend/src/assets/shophub.png)
 
@@ -33,10 +38,12 @@ Welcome to Shophub, a full-fledged MERN stack e-commerce web application designe
 - Cart
 - Orders
 - 404 Page
+  
 
 ### Admin Pages:
 - Admin Dashboard
 - Manage Items
+  
 
 ### Functionality:
 - Basic user authentication
@@ -46,20 +53,25 @@ Welcome to Shophub, a full-fledged MERN stack e-commerce web application designe
 - Responsive design for mobile devices
 - Use of modals for various interactions
 - Moment package for date formatting
+  
 
 ## REST API and Backend Features:
 
+
 ### CRUD Operations:
 - REST API for seamless Create, Read, Update, Delete operations
+  
 
 ### Authorization:
 - JWT verification for admin-only operations
 
 ### Security:
 - BcryptJS for secure password hashing
+  
 
 ### Payment Integration:
 - Razorpay integration for secure and efficient payment processing
+  
 
 ### Performance Optimization:
 - Caching for static files
@@ -70,10 +82,10 @@ Welcome to Shophub, a full-fledged MERN stack e-commerce web application designe
 ### 1. Clone the repository:
 
 ```bash
-git clone https://github.com/your-username/shophub.git
+git clone https://github.com/b0n21en5/shophub.git
 ```
 
-### 2.Set up the backend:
+### 2. Set up the backend:
 - Configure environment variables
 - Start the backend server
 ```bash
@@ -82,7 +94,7 @@ npm install
 npm run server
 ```
 
-### 3.Set up the frontend:
+### 3. Set up the frontend:
 - Configure environment variables
 - Start the React app
 ```bash
@@ -91,14 +103,15 @@ npm install
 npm run dev
 ```
 
-### 4.Access the application at http://localhost:5173 in your browser.
+### 4. Access the application at http://localhost:5173 in your browser.
 
 ### Connect with Me:
 I'm excited to share this project with the community. Let's connect and discuss the incredible world of e-commerce and technology!
 
-LinkedIn: ![Bikash Nath](https://www.linkedin.com/in/bikash-nath/)
+LinkedIn: [Bikash Nath](https://www.linkedin.com/in/bikash-nath/)
 Email: bikashnath8787@gmail.com
-Feel free to explore, contribute, and customize Shophub to suit your needs. Happy coding! 🚀✨
+
+- Feel free to explore, contribute, and customize Shophub to suit your needs. Happy coding! 🚀✨
 
 
 
