@@ -9,9 +9,8 @@
 }
 
 .remove_item_modal_overlay .remove_item_modal {
-  width: 406px;
-  height: 200px;
-  padding: 26px;
+  max-width: 425px;
+  max-height: 225px;
   background-color: white;
   position: absolute;
   top: 180px;
@@ -35,13 +34,19 @@
 .remove_item_modal .heading {
   font-size: 1.2rem;
   font-weight: 600;
-  margin-bottom: 20px;
+  padding: 26px;
+}
+
+.remove_item_modal span{
+  padding: 50px 26px;
+  padding-top: 0;
 }
 
 .remove_item_modal .buttons {
   display: flex;
-  justify-content: space-between;
-  margin-top: 30px;
+  justify-content: space-around;
+  width: 406px;
+  padding: 30px 0;
 }
 
 .remove_item_modal .btn {
@@ -52,7 +57,6 @@
   opacity: 1;
   width: 166px;
   height: 50px;
-  padding: 24px 0;
   border-radius: 2px;
   cursor: pointer;
 }
@@ -68,10 +72,11 @@
 .remove_item_modal .remove_btn {
   color: white;
   background-color: #2874f0;
+  border: .5px solid rgba(211, 207, 207, 0.61);
 }
 
-/* Mobile Responsiveness - 412px */
-@media screen and (max-width: 412px) {
+/* Mobile Responsiveness - 420px */
+@media screen and (max-width: 420px) {
   .remove_item_modal_overlay {
     background-color: rgba(36, 35, 35, 0.626);
   }
@@ -90,25 +95,27 @@
   .remove_item_modal .heading {
     font-size: 1rem;
     font-weight: 500;
+    padding: 0;
     margin: 1.5rem 1.5rem 1rem;
   }
 
   .remove_item_modal span {
     font-size: 14px;
-    font-weight: 600;
+    font-weight: 400;
+    padding: 0;
     margin: 0.5rem 1.5rem;
   }
 
   .remove_item_modal .buttons {
     margin: 0;
+    padding: 0;
+    justify-content: flex-start;
   }
 
   .remove_item_modal .btn {
     font-size: 14px;
-  }
-
-  .remove_item_modal .btn {
-    width: 100%;
+    max-height: 46px;
+    border: 0.5px solid rgba(235, 229, 229, 0.527)
   }
 
   .remove_item_modal .cancel_btn {
@@ -118,6 +125,5 @@
   .remove_item_modal .remove_btn {
     color: gray;
     background-color: #fff;
-    border: 0.5px solid gray;
   }
 }

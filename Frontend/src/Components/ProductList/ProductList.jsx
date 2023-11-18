@@ -9,7 +9,7 @@ const ProductList = ({ category }) => {
 
   const fetchProductsByCategory = async () => {
     let limit = 6;
-    if (window.innerWidth <= 412) {
+    if (window.innerWidth <= 420) {
       limit = 4;
     }
 

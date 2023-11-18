@@ -71,8 +71,8 @@
 .dodg_blue {
 }
 
-/* Mobile Responsiveness - 412px */
-@media screen and (max-width: 412px) {
+/* Mobile Responsiveness - 420px */
+@media screen and (max-width: 420px) {
   .search_modal {
     left: 6px;
     top: 100px;

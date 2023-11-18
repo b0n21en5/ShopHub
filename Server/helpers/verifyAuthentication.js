@@ -7,7 +7,7 @@ export const verifyAuthentication = async (req, res, next) => {
     const token = req.cookies.user_token;
     const decoded = await jwt.verify(token, process.env.JWT_KEY);
 
-    if (!decoded) throw error();
+    req.user = decoded;
 
     next();
   } catch (error) {

@@ -164,35 +164,14 @@
   right: 188px;
 }
 
-/* Mobile Responsiveness - 412px*/
-@media screen and (max-width: 412px) {
+/* Mobile Responsiveness - 420px*/
+@media screen and (max-width: 420px) {
   .navbar {
     flex-wrap: wrap;
     padding: 10px;
     padding-bottom: 8px;
     background-color: rgb(40, 116, 240);
     height: max-content;
-  }
-
-  /* Additional styles for hiding/showing the navbar on scroll */
-  .navbar_hidden {
-    transform: translateY(-100%);
-    transition: transform 0.3s ease-in-out;
-  }
-
-  .navbar_visible {
-    transform: translateY(0);
-    transition: transform 0.3s ease-in-out;
-  }
-
-  .scroll-up .navbar_hidden,
-  .scroll-down .navbar_visible {
-    transform: translateY(0);
-  }
-
-  .scroll-up .navbar_visible,
-  .scroll-down .navbar_hidden {
-    transform: translateY(-100%);
   }
 
   .navbar .logo_cnt {

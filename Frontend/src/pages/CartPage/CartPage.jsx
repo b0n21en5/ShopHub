@@ -7,6 +7,7 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import logo from "../../assets/logo.png";
 import { useSelector } from "react-redux";
 import toast from "react-hot-toast";
+import cartImg from "/src/assets/cart.webp";
 import styles from "./CartPage.module.css";
 
 const CartPage = () => {
@@ -194,12 +195,7 @@ const CartPage = () => {
       <div className={styles.cart_cnt}>
         {!cartProducts.length ? (
           <div className={styles.missing}>
-            <img
-              width={222}
-              height={162}
-              src="/src/assets/cart.webp"
-              alt="no-item-in-cart"
-            />
+            <img width={222} height={162} src={cartImg} alt="no-item-in-cart" />
             <div className={styles.head}>
               {!user ? "Missing Cart items?" : "Your cart is empty!"}
             </div>
@@ -342,7 +338,7 @@ const CartPage = () => {
         <div className={styles.recent_products_heading}>Recently Added</div>
         <div className={styles.recent_products_cnt}>
           {recentProducts.map((prodt) => (
-            <div className={styles.recent_product}>
+            <div className={styles.recent_product} key={prodt._id}>
               <img
                 src={`/api/products/photo/${prodt._id}`}
                 alt={prodt.name}
