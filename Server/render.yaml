@@ -7,5 +7,5 @@ services:
       - key: NODE_ENV
         value: production
     staticPublishing:
-      - source: "Frontend/dist"
+      - source: "../Frontend/dist"
         target: "/static"
