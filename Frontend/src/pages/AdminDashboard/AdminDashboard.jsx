@@ -6,6 +6,15 @@ import { faEye, faStar } from "@fortawesome/free-solid-svg-icons";
 import { Link, useLocation, useNavigation } from "react-router-dom";
 import moment from "moment";
 import styles from "./AdminDashboard.module.css";
+import {
+  BASE_URL,
+  adminLoginRoute,
+  allCatsRoute,
+  allOrdersRoute,
+  allProductsRoute,
+  productPhotoRoute,
+  updateOrderRoute,
+} from "../../constants/constants";
 
 const AdminDashboard = () => {
   const [admin, setAdmin] = useState({});
@@ -31,7 +40,7 @@ const AdminDashboard = () => {
   const handleAdminLogin = async (e) => {
     e.preventDefault();
     try {
-      const { data } = await axios.post("/api/auth/admin-login", {
+      const { data } = await axios.post(`${adminLoginRoute}`, {
         email: auth.login,
         phone: parseInt(auth.login),
         password: auth.password,
@@ -54,11 +63,11 @@ const AdminDashboard = () => {
       let result;
 
       if (path === "products") {
-        result = await axios.get(`/api/products/get-all`);
+        result = await axios.get(allProductsRoute);
       } else if (path === "category") {
-        result = await axios.get(`/api/category/get-all`);
+        result = await axios.get(allCatsRoute);
       } else if (path === "orders") {
-        result = await axios.get(`/api/auth/get-all-orders`);
+        result = await axios.get(allOrdersRoute);
         console.log(result.data);
       }
 
@@ -70,7 +79,7 @@ const AdminDashboard = () => {
 
   const updateOrderStatus = async (orderId, status) => {
     try {
-      const { data } = await axios.put(`/api/auth/update-order/${orderId}`, {
+      const { data } = await axios.put(`${updateOrderRoute}/${orderId}`, {
         status: status,
       });
       toast.success(data.message);
@@ -179,7 +188,7 @@ const AdminDashboard = () => {
                         <Link to="" className={styles.prodt} key={prodt._id}>
                           <div className={styles.img_cnt}>
                             <img
-                              src={`/api/products/photo/${prodt._id}`}
+                              src={`${productPhotoRoute}/${prodt._id}`}
                               alt={`${prodt.name}-image`}
                             />
                           </div>
@@ -210,7 +219,7 @@ const AdminDashboard = () => {
                       <Link to={`/admin/${path}/${prodt._id}`} key={prodt._id}>
                         <div className={styles.img_cnt}>
                           <img
-                            src={`/api/${
+                            src={`${BASE_URL}/${
                               path === "category" ? "category" : "products"
                             }/photo/${prodt._id}`}
                             alt={prodt?.name}

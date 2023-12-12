@@ -15,6 +15,12 @@ import axios from "axios";
 
 import styles from "./ProductCatalog.module.css";
 import toast from "react-hot-toast";
+import {
+  allBrandsRoute,
+  allCatsRoute,
+  filterProductsRoute,
+  productPhotoRoute,
+} from "../../constants/constants";
 
 const ProductCatalog = () => {
   const [fetchedData, setFetchedData] = useState([]);
@@ -39,7 +45,7 @@ const ProductCatalog = () => {
 
     try {
       const { data } = await axios.get(
-        `/api/products/filter-products?cid=${catId}&price=${pricing.min},${pricing.max}&sortBy=${sort.by}&order=${sort.order}&rating=${rating.sel}&discount=${discounts.checks}&brand=${brands.checks}`
+        `${filterProductsRoute}?cid=${catId}&price=${pricing.min},${pricing.max}&sortBy=${sort.by}&order=${sort.order}&rating=${rating.sel}&discount=${discounts.checks}&brand=${brands.checks}`
       );
 
       let newData = data.map((item) => {
@@ -58,7 +64,7 @@ const ProductCatalog = () => {
 
   const getCategoryId = async () => {
     try {
-      const { data } = await axios.get("/api/category/get-all");
+      const { data } = await axios.get(allCatsRoute);
       const cat = data.find((dt) => dt.slug == path);
 
       if (cat) return cat._id;
@@ -70,9 +76,7 @@ const ProductCatalog = () => {
   const fetchAllBrands = async () => {
     let catId = await getCategoryId();
     try {
-      const { data } = await axios.get(
-        `/api/products/get-all-brands?catId=${catId}`
-      );
+      const { data } = await axios.get(`${allBrandsRoute}?catId=${catId}`);
       setBrands({ ...brands, data: data });
     } catch (error) {
       toast.error(error.response.data.message);
@@ -452,14 +456,18 @@ const ProductCatalog = () => {
         <div className={styles.mb_filters_cnt}>
           <div
             className={styles.mb_sorting}
-            onClick={() => setMbVisible((p) => ({ filter:false, sort: !p.sort }))}
+            onClick={() =>
+              setMbVisible((p) => ({ filter: false, sort: !p.sort }))
+            }
           >
             <FontAwesomeIcon icon={faArrowDownWideShort} />
             Sort
           </div>
           <div
             className={styles.mb_filters}
-            onClick={() => setMbVisible((p) => ({ sort:false, filter: !p.filter }))}
+            onClick={() =>
+              setMbVisible((p) => ({ sort: false, filter: !p.filter }))
+            }
           >
             <FontAwesomeIcon icon={faFilter} />
             Filter
@@ -541,7 +549,7 @@ const ProductCatalog = () => {
                 >
                   <div className={styles.img_cnt}>
                     <img
-                      src={`/api/products/photo/${item._id}`}
+                      src={`${productPhotoRoute}/${item._id}`}
                       width="auto"
                       height="auto"
                       alt={item.name}

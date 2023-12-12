@@ -1,11 +1,12 @@
 import axios from "axios";
 import React, { useEffect, useState } from "react";
-import styles from "./Home.module.css";
 import { Link } from "react-router-dom";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faAngleDown, faAngleUp } from "@fortawesome/free-solid-svg-icons";
 import ProductList from "../../Components/ProductList/ProductList";
 import toast from "react-hot-toast";
+import { allCatsRoute, catPhotoRoute } from "../../constants/constants";
+import styles from "./Home.module.css";
 
 const Home = () => {
   const [categories, setCategories] = useState([]);
@@ -13,7 +14,7 @@ const Home = () => {
 
   const getAllCategories = async () => {
     try {
-      const { data } = await axios.get("/api/category/get-all");
+      const { data } = await axios.get(allCatsRoute);
       setCategories(data);
     } catch (error) {
       toast.error(error.response.data.message);
@@ -39,7 +40,7 @@ const Home = () => {
                 <img
                   width="64"
                   height="64"
-                  src={`/api/category/photo/${c._id}`}
+                  src={`${catPhotoRoute}/${c._id}`}
                   alt={`${c.name}-image`}
                 />
               </div>

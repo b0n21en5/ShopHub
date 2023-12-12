@@ -6,8 +6,9 @@ import { faEye } from "@fortawesome/free-solid-svg-icons";
 import { useDispatch } from "react-redux";
 import { setUser } from "../../store/userSlice";
 import toast from "react-hot-toast";
-import authImg from "../../assets/auth.png"
+import authImg from "../../assets/auth.png";
 import styles from "./Auth.module.css";
+import { loginRoute, registerRoute } from "../../constants/constants";
 
 const Auth = () => {
   const [auth, setAuth] = useState({
@@ -35,11 +36,15 @@ const Auth = () => {
   const handleLogin = async (e) => {
     e.preventDefault();
     try {
-      const { data } = await axios.post("/api/auth/login", {
-        email: auth.login,
-        phone: parseInt(auth.login),
-        password: auth.password,
-      });
+      const { data } = await axios.post(
+        loginRoute,
+        {
+          email: auth.login,
+          phone: parseInt(auth.login),
+          password: auth.password,
+        },
+        { withCredentials: true }
+      );
 
       if (data) {
         dispatch(setUser(data));
@@ -54,7 +59,7 @@ const Auth = () => {
   const handleNewUserRegister = async (e) => {
     e.preventDefault();
     try {
-      const { data } = await axios.post("/api/auth/register", {
+      const { data } = await axios.post(`${registerRoute}`, {
         username: auth.username,
         email: auth.email,
         phone: auth.phone,

@@ -6,6 +6,7 @@ import axios from "axios";
 import NavBar from "./Components/NavBar/NavBar";
 import Footer from "./Components/Footer/Footer";
 import Home from "./pages/Home/Home";
+import { allCatsRoute } from "./constants/constants";
 
 // Lazy-loaded components
 const ProductDetail = lazy(() => import("./pages/ProductDetail/ProductDetail"));
@@ -27,7 +28,7 @@ function App() {
 
   const getAllCategories = async () => {
     try {
-      const { data } = await axios.get("/api/category/get-all");
+      const { data } = await axios.get(allCatsRoute);
       setCategories(data);
     } catch (error) {
       toast.error(error.response.data.message);

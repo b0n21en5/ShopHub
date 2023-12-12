@@ -12,9 +12,10 @@ import {
 import { removeUser } from "../../store/userSlice";
 import { useEffect, useState } from "react";
 import ProfileInputField from "../../Components/ProfileInputField/ProfileInputField";
-import styles from "./MyProfile.module.css";
 import axios from "axios";
 import toast from "react-hot-toast";
+import styles from "./MyProfile.module.css";
+import { updateUserRoute } from "../../constants/constants";
 
 const MyProfile = () => {
   const [edit, setEdit] = useState("profile");
@@ -39,7 +40,7 @@ const MyProfile = () => {
 
   const updateUserCredentials = async () => {
     try {
-      const { data } = await axios.put("/api/auth/update-user", {
+      const { data } = await axios.put(updateUserRoute, {
         username: username.value,
         email: email.value,
         phone: phone.value,

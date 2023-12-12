@@ -1,8 +1,12 @@
 import axios from "axios";
 import { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
-import styles from "./ProductList.module.css";
+import {
+  productByCatRoute,
+  productPhotoRoute,
+} from "../../constants/constants";
 import toast from "react-hot-toast";
+import styles from "./ProductList.module.css";
 
 const ProductList = ({ category }) => {
   const [products, setProducts] = useState([]);
@@ -15,9 +19,7 @@ const ProductList = ({ category }) => {
 
     try {
       const { data } = await axios.get(
-        `/api/products/get-by-category/${
-          category._id
-        }?currPage=${1}&pageLimit=${limit}`
+        `${productByCatRoute}/${category._id}?currPage=${1}&pageLimit=${limit}`
       );
 
       setProducts(data);
@@ -42,7 +44,7 @@ const ProductList = ({ category }) => {
             >
               <div className={styles.prdt_img_cnt}>
                 <img
-                  src={`/api/products/photo/${prdt._id}`}
+                  src={`${productPhotoRoute}/${prdt._id}`}
                   alt={`${prdt.name}-image`}
                 />
               </div>

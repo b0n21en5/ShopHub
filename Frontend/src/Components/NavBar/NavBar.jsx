@@ -15,6 +15,7 @@ import axios from "axios";
 import logo from "../../assets/logo.png";
 import { useSelector } from "react-redux";
 import toast from "react-hot-toast";
+import { allCatsRoute } from "../../constants/constants";
 import styles from "./NavBar.module.css";
 
 const NavBar = () => {
@@ -31,7 +32,7 @@ const NavBar = () => {
 
   const getAllCategories = async () => {
     try {
-      const { data } = await axios.get("/api/category/get-all");
+      const { data } = await axios.get(`${allCatsRoute}`);
       setCategories(data);
     } catch (error) {
       toast.error(error.response.data.message);

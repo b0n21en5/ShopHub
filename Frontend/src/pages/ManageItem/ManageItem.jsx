@@ -3,6 +3,7 @@ import { useEffect, useState } from "react";
 import axios from "axios";
 import toast from "react-hot-toast";
 import styles from "./ManageItem.module.css";
+import { BASE_URL, allCatsRoute } from "../../constants/constants";
 
 const ManageItem = () => {
   const [categories, setCategories] = useState([]);
@@ -26,7 +27,7 @@ const ManageItem = () => {
 
   const fetchSingleData = async () => {
     try {
-      const { data } = await axios.get(`/api/${links}/get-single/${id}`);
+      const { data } = await axios.get(`${BASE_URL}/${links}/get-single/${id}`);
       setPostData({
         name: data.name,
         photo: "",
@@ -47,7 +48,7 @@ const ManageItem = () => {
 
   const fetchAllCategories = async () => {
     try {
-      const { data } = await axios.get("/api/category/get-all");
+      const { data } = await axios.get(allCatsRoute);
       setCategories(data);
     } catch (error) {
       toast.error(error.response.data.message);
@@ -76,7 +77,10 @@ const ManageItem = () => {
       formData.append("delivery", postData.delivery);
       formData.append("brand", postData.brand);
 
-      const { data } = await axios.post(`/api/${slug}/add-new`, formData);
+      const { data } = await axios.post(
+        `${BASE_URL}/${slug}/add-new`,
+        formData
+      );
       toast.success(data.message);
       navigate(`/admin/${slug}`);
     } catch (error) {
@@ -100,7 +104,10 @@ const ManageItem = () => {
       formData.append("discount", postData.discount);
       formData.append("delivery", postData.delivery);
       formData.append("brand", postData.brand);
-      const { data } = await axios.put(`/api/${links}/update/${id}`, formData);
+      const { data } = await axios.put(
+        `${BASE_URL}/${links}/update/${id}`,
+        formData
+      );
       toast.success(data.message);
       navigate(`/admin/${links}`);
     } catch (error) {
@@ -119,7 +126,7 @@ const ManageItem = () => {
 
   const handleDeleteProductCategory = async () => {
     try {
-      const { data } = await axios.delete(`/api/${links}/delete/${id}`);
+      const { data } = await axios.delete(`${BASE_URL}/${links}/delete/${id}`);
       toast.success(data.message);
       navigate(`/admin/${links}`);
     } catch (error) {
@@ -140,7 +147,7 @@ const ManageItem = () => {
       <div className={`${styles.cnt} ${links ? styles.bg_white : ""}`}>
         {links && (
           <img
-            src={`/api/${links}/photo/${id}`}
+            src={`${BASE_URL}/${links}/photo/${id}`}
             alt="product/category image"
             width={200}
             height={200}

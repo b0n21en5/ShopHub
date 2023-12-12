@@ -14,6 +14,7 @@ import { Checkbox } from "antd";
 import toast from "react-hot-toast";
 import styles from "./Order.module.css";
 import moment from "moment";
+import { productPhotoRoute, userOrdersRoute } from "../../constants/constants";
 
 const Order = () => {
   const [orders, setOrders] = useState([]);
@@ -53,7 +54,7 @@ const Order = () => {
   const getAllOrders = async () => {
     try {
       const { data } = await axios.get(
-        `/api/auth/single-user-orders?search=${filter.search}&status=${filter.status}&time=${filter.time}`
+        `${userOrdersRoute}?search=${filter.search}&status=${filter.status}&time=${filter.time}`
       );
       setOrders(data);
     } catch (error) {
@@ -270,7 +271,7 @@ const Order = () => {
                   <div className={styles.all_orders} key={ord._id}>
                     <div className={styles.img_cnt}>
                       <img
-                        src={`/api/products/photo/${ord._id}`}
+                        src={`${productPhotoRoute}/${ord._id}`}
                         alt={ord.name}
                         width="auto"
                         height="auto"

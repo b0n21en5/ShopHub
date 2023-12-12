@@ -6,13 +6,18 @@ import { faMagnifyingGlass } from "@fortawesome/free-solid-svg-icons";
 import { Link } from "react-router-dom";
 import toast from "react-hot-toast";
 import styles from "./SearchModal.module.css";
+import {
+  allCatsRoute,
+  productPhotoRoute,
+  searchProductsRoute,
+} from "../../constants/constants";
 
 const SearchModal = ({ setIsVisible, searchTerm }) => {
   const [searchData, setSearchData] = useState([]);
 
   const getAllCategories = async () => {
     try {
-      const { data } = await axios.get("/api/category/get-all");
+      const { data } = await axios.get(`${allCatsRoute}`);
       setSearchData(data);
     } catch (error) {
       toast.error(error.response.data.message);
@@ -21,7 +26,7 @@ const SearchModal = ({ setIsVisible, searchTerm }) => {
 
   const handleSearchQuery = async () => {
     try {
-      const { data } = await axios.get(`/api/products/search/${searchTerm}`);
+      const { data } = await axios.get(`${searchProductsRoute}/${searchTerm}`);
       setSearchData(data);
     } catch (error) {
       toast.error(error.response.data.message);
@@ -56,7 +61,7 @@ const SearchModal = ({ setIsVisible, searchTerm }) => {
                 <img
                   width={40}
                   height={40}
-                  src={`/api/products/photo/${item._id}`}
+                  src={`${productPhotoRoute}/${item._id}`}
                   alt={item.name}
                 />
               ) : (

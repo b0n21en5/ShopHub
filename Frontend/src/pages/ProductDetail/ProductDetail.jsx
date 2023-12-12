@@ -10,6 +10,13 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import logo from "../../assets/logo.png";
 import styles from "./ProductDetail.module.css";
 import toast from "react-hot-toast";
+import {
+  paymentRoute,
+  paymentSuccessRoute,
+  productDetailRoute,
+  productPhotoRoute,
+  similarProductsRoute,
+} from "../../constants/constants";
 
 const ProductDetail = () => {
   const [product, setProduct] = useState({});
@@ -39,7 +46,7 @@ const ProductDetail = () => {
 
   const fetchProductDetail = async () => {
     try {
-      const { data } = await axios.get(`/api/products/get-single/${pid}`);
+      const { data } = await axios.get(`${productDetailRoute}/${pid}`);
       try {
         data.desc = JSON.parse(data.desc);
       } catch (e) {}
@@ -56,7 +63,7 @@ const ProductDetail = () => {
   const fetchSimilarProducts = async () => {
     try {
       const { data } = await axios.get(
-        `/api/products/similar-products/${product.category}/${product._id}`
+        `${similarProductsRoute}/${product.category}/${product._id}`
       );
       setSimilarProducts(data);
     } catch (error) {
@@ -108,7 +115,7 @@ const ProductDetail = () => {
       return;
     }
 
-    const result = await axios.post("/api/products/payment", {
+    const result = await axios.post(paymentRoute, {
       products: [product],
     });
 
@@ -135,7 +142,7 @@ const ProductDetail = () => {
           razorpaySignature: response.razorpay_signature,
         };
 
-        const result = await axios.post("/api/products/payment/success", {
+        const result = await axios.post(paymentSuccessRoute, {
           paymentDetails,
           products: [product],
         });
@@ -170,7 +177,7 @@ const ProductDetail = () => {
           <div className={styles.detail_left}>
             <div className={styles.img_cnt}>
               <img
-                src={product._id ? `/api/products/photo/${product?._id}` : ""}
+                src={product._id ? `${productPhotoRoute}/${product?._id}` : ""}
                 alt={product?.name}
               />
             </div>
@@ -314,7 +321,7 @@ const ProductDetail = () => {
             >
               <div className={styles.img_cnt}>
                 <img
-                  src={`/api/products/photo/${prodt._id}`}
+                  src={`${productPhotoRoute}/${prodt._id}`}
                   alt={prodt.name}
                 />
               </div>

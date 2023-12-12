@@ -9,6 +9,13 @@ import { useSelector } from "react-redux";
 import toast from "react-hot-toast";
 import cartImg from "/src/assets/cart.webp";
 import styles from "./CartPage.module.css";
+import {
+  cartProductsRoute,
+  newlyAddedProductsRoute,
+  paymentRoute,
+  paymentSuccessRoute,
+  productPhotoRoute,
+} from "../../constants/constants";
 
 const CartPage = () => {
   const [cartProducts, setCartProducts] = useState([]);
@@ -51,9 +58,7 @@ const CartPage = () => {
 
   const getCartProducts = async (cartItems) => {
     try {
-      const { data } = await axios.get(
-        `/api/products/get-multiple?ids=${cartItems}`
-      );
+      const { data } = await axios.get(`${cartProductsRoute}?ids=${cartItems}`);
       setCartProducts(data);
     } catch (error) {
       toast.error(error.response.data.message);
@@ -63,7 +68,7 @@ const CartPage = () => {
 
   const fetchRecentProducts = async () => {
     try {
-      const { data } = await axios.get("/api/products/get-recently-added");
+      const { data } = await axios.get(`${newlyAddedProductsRoute}`);
       setRecentProducts(data);
     } catch (error) {
       toast.error(error.response.data.message);
@@ -135,7 +140,7 @@ const CartPage = () => {
       return;
     }
 
-    const result = await axios.post("/api/products/payment", {
+    const result = await axios.post(`${paymentRoute}`, {
       products: cartProducts,
     });
 
@@ -162,7 +167,7 @@ const CartPage = () => {
           razorpaySignature: response.razorpay_signature,
         };
 
-        const result = await axios.post("/api/products/payment/success", {
+        const result = await axios.post(`${paymentSuccessRoute}`, {
           paymentDetails,
           products: cartProducts,
         });
@@ -219,7 +224,7 @@ const CartPage = () => {
                 <div key={prodt._id} className={styles.bor_btm}>
                   <div className={styles.product}>
                     <img
-                      src={`/api/products/photo/${prodt._id}`}
+                      src={`${productPhotoRoute}/${prodt._id}`}
                       alt={prodt.name}
                       width={100}
                       height={120}
@@ -340,7 +345,7 @@ const CartPage = () => {
           {recentProducts.map((prodt) => (
             <div className={styles.recent_product} key={prodt._id}>
               <img
-                src={`/api/products/photo/${prodt._id}`}
+                src={`${productPhotoRoute}/${prodt._id}`}
                 alt={prodt.name}
                 width={120}
                 height={148}
